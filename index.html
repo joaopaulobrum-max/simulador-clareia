@@ -179,9 +179,14 @@ footer{font-size:11px;color:var(--suave);padding-block:20px 34px;border-top:1px 
   .pdf-tab td:nth-child(2),.pdf-tab td:nth-child(3){white-space:nowrap;font-variant-numeric:tabular-nums}
   .pdf-tab td:nth-child(3){font-weight:700}
   .pdf-tab small{font-weight:400;color:#62777A}
-  .pdf-txt{margin:14px 0 6px;font-size:10.5pt;color:#26383A}
-  .pdf-meta{font-size:9.5pt;color:#62777A;margin:0}
-  .pdf-leg{font-size:8pt;color:#777;border-top:1px solid #E2DACB;padding-top:8px;margin-top:18px;line-height:1.4}
+  .pdf-txt{margin:12px 0 8px;font-size:10pt;color:#26383A}
+  .pdf-mapa{position:relative;width:62%;margin:0 auto 8px;break-inside:avoid}
+  .pdf-mapa img{display:block;width:100%;height:auto;border-radius:6px}
+  .pdf-pin{position:absolute;width:7%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;background:#E0862A;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:7pt;line-height:1;border:1.5px solid #fff;box-shadow:0 0 0 4px rgba(224,134,42,.45)}
+  .pdf-mapa-leg{font-size:8pt;color:#62777A;text-align:center;margin-top:4px}
+  .pdf-meta{font-size:9pt;color:#62777A;margin:0}
+  .pdf-leg{font-size:7.5pt;color:#777;border-top:1px solid #E2DACB;padding-top:6px;margin-top:10px;line-height:1.35}
+  #pdf,#pdf *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
 }
 
 @media (max-width:620px){
@@ -482,8 +487,15 @@ function montaPdf(l){
       <tr><td>Financiamento direto · 28%</td><td>${brl2(p.fin.tot)}</td><td>36x ${brl2(p.fin.parc)} <small>(juros 1% a.m.)</small></td></tr>
     </table>
     <p class="pdf-txt">Terrenos a 300 m da praia na Barrinha, Garopaba/SC. Casa Clareia (academia, salas de leitura, jogos e meditação, lareira), ilha esportiva, trilha, passarela e bosques. Entrega prevista: novembro/2027.</p>
+    <div class="pdf-mapa">
+      <img src="${document.querySelector("#mapa-in img").src}" alt="Mapa do condomínio com o lote ${id(l)} em destaque">
+      ${LOTE_POS[id(l)] ? `<div class="pdf-pin" style="left:${LOTE_POS[id(l)][0]}%;top:${LOTE_POS[id(l)][1]}%">${id(l)}</div>` : ``}
+      <div class="pdf-mapa-leg">Lote ${id(l)} em laranja · A Pórtico · C Casa Clareia · E Ilha Esportiva · F Passarela · H Estar sunset</div>
+    </div>
     <p class="pdf-meta">Simulação gerada em ${hoje}${lead.nome ? ` para ${lead.nome}` : ""}. Reserva mediante solicitação de prioridade, sujeita à análise da loteadora.</p>`;
 }
+// Atalho: abrir a página com ?pdf=A2 já monta a folha do lote (útil para gerar o PDF direto)
+{ const q = new URLSearchParams(location.search).get("pdf"); const lq = q && LOTES.find(x=>id(x)===q.toUpperCase()); if(lq){ montaPdf(lq); document.getElementById("pdf").classList.add("ver"); } }
 
 document.getElementById("ir-topo").addEventListener("click", ()=>{
   document.getElementById("simulador").scrollIntoView({behavior:"smooth"});
