@@ -373,7 +373,7 @@ function mostra(cod){
     </div>`;
   const sel = document.getElementById("lote"); sel.value = cod;
   sel.addEventListener("change", e=>mostra(e.target.value));
-  document.getElementById("pdf-btn").addEventListener("click", ()=>{ montaPdf(l); window.print(); });
+  document.getElementById("pdf-btn").addEventListener("click", ()=>{ montaPdf(l); ping("pdf", id(l)); window.print(); });
   loteAtual = cod;
   ligaGate();
   marcaLote(cod);
@@ -411,6 +411,17 @@ window.addEventListener("resize", aplicaZoom);
 document.querySelector("#mapa-in img").addEventListener("load", aplicaZoom);
 
 // ---- formulário de contato: grava na planilha "Clareia · Acessos ao Simulador" (mesmo Google Forms de antes) ----
+// ---- contador de acessos: um "ping" invisível num Google Forms só de contagem (evento + lote); nada pessoal ----
+const PING_URL = "https://docs.google.com/forms/d/e/1FAIpQLSf-tgRUET4vwoaaylmyX6LCZ3ajyTHoOhdr4oprSdi-77aDwg/formResponse";
+const PING = { evento:"entry.1173936412", lote:"entry.1007517406" };
+function ping(evento, lote){
+  try{
+    const b = new URLSearchParams(); b.append(PING.evento, evento); b.append(PING.lote, lote||"");
+    fetch(PING_URL, { method:"POST", mode:"no-cors", headers:{"Content-Type":"application/x-www-form-urlencoded"}, body:b, keepalive:true }).catch(()=>{});
+  }catch(e){}
+}
+ping("abertura", new URLSearchParams(location.search).get("pdf") ? "pdf:"+new URLSearchParams(location.search).get("pdf") : "");
+
 const FORM_ID = "1FAIpQLSeB6niA5fKOqDaGbbUa9v4NQC7PtVSvtHITzLFwklrNj4lAXQ";
 const FORM_POST = `https://docs.google.com/forms/d/e/${FORM_ID}/formResponse`;
 const FORM_VIEW = `https://docs.google.com/forms/d/e/${FORM_ID}/viewform`;
@@ -466,6 +477,7 @@ function ligaGate(){
     }catch(err){ console.warn("cadastro não enviado:", err); }
     lead.liberado = true;
     try{ localStorage.setItem("clareia-sim-liberado","1"); }catch(e){}
+    ping("cadastro", loteAtual);
     libera();
   });
 }
