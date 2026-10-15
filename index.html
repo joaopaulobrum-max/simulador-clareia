@@ -153,6 +153,35 @@ footer{font-size:11px;color:var(--suave);padding-block:20px 34px;border-top:1px 
 .gate .b1[disabled]{opacity:.6;cursor:wait}
 .liberado{margin:0 18px 6px;padding:9px 12px;border-radius:8px;background:rgba(224,134,42,.18);color:var(--creme);font-size:13px;font-weight:600}
 .cta .b2{margin-top:12px}
+.dica{font-size:12px;color:#A9BBB9;margin:8px 0 0}
+
+/* folha do PDF (impressão) */
+#pdf{display:none}
+@media print{
+  @page{size:A4;margin:16mm}
+  body>*:not(#pdf){display:none!important}
+  body{background:#fff;color:#111;font-family:var(--f-body);font-size:11pt}
+  #pdf{display:block}
+  .pdf-top{display:flex;align-items:center;gap:14px;border-bottom:2px solid #E0862A;padding-bottom:10px;margin-bottom:14px}
+  .pdf-top img{height:40px;width:auto}
+  .pdf-titulo{font-weight:700;font-size:12pt;color:#2E4245;line-height:1.3}
+  .pdf-titulo span{font-weight:400;color:#62777A;font-size:10pt}
+  #pdf h1{font-family:var(--f-display);font-size:26pt;font-weight:600;color:#2E4245;margin:0 0 4px}
+  #pdf h1 small{display:block;font-family:var(--f-body);font-size:10.5pt;font-weight:400;color:#62777A;margin-top:2px}
+  .pdf-preco{font-size:13pt;margin:6px 0 12px;color:#2E4245}
+  .pdf-preco s{color:#999;margin-right:6px}
+  .pdf-preco b{font-size:18pt;color:#E0862A}
+  .pdf-preco span{display:block;font-size:9.5pt;color:#62777A}
+  .pdf-tab{width:100%;border-collapse:collapse;font-size:10.5pt}
+  .pdf-tab th{text-align:left;background:#F4EEE3;color:#2E4245;padding:7px 8px;font-size:9.5pt;letter-spacing:.04em;text-transform:uppercase}
+  .pdf-tab td{padding:7px 8px;border-bottom:1px solid #E2DACB}
+  .pdf-tab td:nth-child(2),.pdf-tab td:nth-child(3){white-space:nowrap;font-variant-numeric:tabular-nums}
+  .pdf-tab td:nth-child(3){font-weight:700}
+  .pdf-tab small{font-weight:400;color:#62777A}
+  .pdf-txt{margin:14px 0 6px;font-size:10.5pt;color:#26383A}
+  .pdf-meta{font-size:9.5pt;color:#62777A;margin:0}
+  .pdf-leg{font-size:8pt;color:#777;border-top:1px solid #E2DACB;padding-top:8px;margin-top:18px;line-height:1.4}
+}
 
 @media (max-width:620px){
   .nums{grid-template-columns:repeat(2,1fr)}
@@ -232,6 +261,16 @@ footer{font-size:11px;color:var(--suave);padding-block:20px 34px;border-top:1px 
   </footer>
 </main>
 
+<!-- Folha de impressão: só aparece ao gerar o PDF -->
+<div id="pdf" aria-hidden="true">
+  <div class="pdf-top">
+    <img id="pdf-logo" alt="Clareia">
+    <div class="pdf-titulo">Clareia Barrinha · Garopaba/SC<br><span>Simulação de pagamento · tabela de outubro/2026</span></div>
+  </div>
+  <div id="pdf-corpo"></div>
+  <p class="pdf-leg">Condição de pagamento: 25% de entrada em 3x · 22% em 12 mensais pré-chaves · 18% em 1 anual · 7% na entrega · 28% em 36x pelo financiamento direto com juros de 1% a.m. (Tabela Price). A tabela é reajustada mensalmente pelo INCC. Valores arredondados ao centavo. Imagens meramente ilustrativas. Projeto de arquitetura: Arte Arquitetura (CAU A11835-4). Paisagismo: Krebs+ Arquitetura Paisagística (CAU A7292-3).</p>
+</div>
+
 <script>
 const LOTES = [
   // [quadra, lote, área m², valor tabela out/26, valor promocional|null]
@@ -304,8 +343,8 @@ function mostra(cod){
         ${linhas(v)}
         ${promo ? `<p class="rod">Condição válida até 31/10/2026.</p>` : `<p class="rod">Valor da tabela de outubro/2026.</p>`}
         <div class="escolha" style="padding-top:0">
-          <div class="acoes"><button class="b1" id="copiar" type="button">Copiar simulação</button><span class="copiado" id="ok" hidden></span></div>
-          <textarea id="texto" readonly hidden aria-label="Simulação para copiar"></textarea>
+          <div class="acoes"><button class="b1" id="pdf-btn" type="button">📄 Gerar PDF da simulação</button></div>
+          <p class="dica">Na janela que abrir, escolha <b>Salvar como PDF</b> (no celular, use o botão de compartilhar) e envie pra quem quiser.</p>
         </div>
       </div>
       <div class="gate" id="gate">
@@ -325,12 +364,7 @@ function mostra(cod){
     </div>`;
   const sel = document.getElementById("lote"); sel.value = cod;
   sel.addEventListener("change", e=>mostra(e.target.value));
-  document.getElementById("texto").value = textoCopia(l);
-  document.getElementById("copiar").addEventListener("click", ()=>{
-    const t = document.getElementById("texto"), ok = document.getElementById("ok");
-    const fallback = ()=>{ t.hidden=false; t.focus(); t.select(); ok.textContent="Texto selecionado. Toque e segure para copiar."; ok.hidden=false; };
-    try{ navigator.clipboard.writeText(t.value).then(()=>{ ok.textContent="Simulação copiada. É só colar no WhatsApp."; ok.hidden=false; }, fallback); }catch(e){ fallback(); }
-  });
+  document.getElementById("pdf-btn").addEventListener("click", ()=>{ montaPdf(l); window.print(); });
   loteAtual = cod;
   ligaGate();
   marcaLote(cod);
@@ -425,6 +459,26 @@ function ligaGate(){
     try{ localStorage.setItem("clareia-sim-liberado","1"); }catch(e){}
     libera();
   });
+}
+
+// ---- PDF: monta a folha de impressão e o navegador gera o PDF (Salvar como PDF) ----
+function montaPdf(l){
+  const v = preco(l), p = plano(v), promo = !!l[4];
+  const hoje = new Date().toLocaleDateString("pt-BR");
+  document.getElementById("pdf-logo").src = document.querySelector(".logo").src;
+  document.getElementById("pdf-corpo").innerHTML = `
+    <h1>Lote ${id(l)} <small>Quadra ${l[0]} · ${m2(l[2])} · ${brl0(v/l[2])}/m²</small></h1>
+    <p class="pdf-preco">${promo ? `<s>de ${brl0(l[3])}</s> <b>por ${brl0(v)}</b> <span>condição especial válida até 31/10/2026</span>` : `<b>${brl0(v)}</b> <span>tabela de outubro/2026</span>`}</p>
+    <table class="pdf-tab">
+      <tr><th>Etapa</th><th>Total</th><th>Parcelas</th></tr>
+      <tr><td>Entrada · 25%</td><td>${brl2(p.entrada.tot)}</td><td>3x ${brl2(p.entrada.parc)}</td></tr>
+      <tr><td>Mensais pré-chaves · 22%</td><td>${brl2(p.mensais.tot)}</td><td>12x ${brl2(p.mensais.parc)}</td></tr>
+      <tr><td>Anual · 18%</td><td>${brl2(p.anual.tot)}</td><td>1x ${brl2(p.anual.tot)}</td></tr>
+      <tr><td>Na entrega · 7%</td><td>${brl2(p.entrega.tot)}</td><td>1x ${brl2(p.entrega.tot)}</td></tr>
+      <tr><td>Financiamento direto · 28%</td><td>${brl2(p.fin.tot)}</td><td>36x ${brl2(p.fin.parc)} <small>(juros 1% a.m.)</small></td></tr>
+    </table>
+    <p class="pdf-txt">Terrenos a 300 m da praia na Barrinha, Garopaba/SC. Casa Clareia (academia, salas de leitura, jogos e meditação, lareira), ilha esportiva, trilha, passarela e bosques. Entrega prevista: novembro/2027.</p>
+    <p class="pdf-meta">Simulação gerada em ${hoje}${lead.nome ? ` para ${lead.nome}` : ""}. Reserva mediante solicitação de prioridade, sujeita à análise da loteadora.</p>`;
 }
 
 document.getElementById("ir-topo").addEventListener("click", ()=>{
