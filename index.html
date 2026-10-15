@@ -132,12 +132,13 @@ textarea{width:100%;min-height:150px;font:inherit;font-size:13px;margin-top:10px
 footer{font-size:11px;color:var(--suave);padding-block:20px 34px;border-top:1px solid var(--linha)}
 
 /* quadro laranja "Efetivar simulação": menor, por cima das parcelas desfocadas, até a pessoa se cadastrar */
-.trava{display:grid;margin-top:4px}
-.trava>*{grid-area:1/1}
-.trava .fundo{filter:blur(7px);opacity:.4;pointer-events:none;user-select:none;transition:filter .4s,opacity .4s}
+.trava{margin-top:4px}
+.trava .teaser td{border-top:0}
+.trava .fundo{filter:blur(6px);opacity:.45;pointer-events:none;user-select:none;transition:filter .4s,opacity .4s}
+.trava:not(.aberta) .fundo .parcelas tr:first-child{display:none} /* a entrada já aparece em cima, nítida */
 .trava.aberta .fundo{filter:none;opacity:1;pointer-events:auto;user-select:auto}
-.trava.aberta .gate{display:none}
-.gate{align-self:center;justify-self:center;width:min(100% - 36px,380px);margin:14px 0;background:var(--laranja);color:#fff;border-radius:12px;padding:16px;box-shadow:0 12px 34px rgba(0,0,0,.35)}
+.trava.aberta .gate,.trava.aberta .teaser{display:none}
+.gate{width:min(100% - 36px,420px);margin:6px auto 10px;background:var(--laranja);color:#fff;border-radius:12px;padding:16px;box-shadow:0 12px 34px rgba(0,0,0,.35)}
 .gate-tit{font-family:var(--f-display);font-size:24px;font-weight:600;line-height:1.05}
 .gate-sub{font-size:12.5px;margin:4px 0 0;color:#FFF3E3}
 .campo{margin-top:9px}
@@ -338,18 +339,12 @@ function mostra(cod){
       <select id="lote">${opcoes}</select>
     </div>
     <div class="trava" id="trava">
-      <div class="fundo" id="simulacao">
-        <p class="liberado" id="liberado" hidden>✅ Simulação liberada.</p>
-        ${linhas(v)}
-        ${promo ? `<p class="rod">Condição válida até 31/10/2026.</p>` : `<p class="rod">Valor da tabela de outubro/2026.</p>`}
-        <div class="escolha" style="padding-top:0">
-          <div class="acoes"><button class="b1" id="pdf-btn" type="button">📄 Gerar PDF da simulação</button></div>
-          <p class="dica">Na janela que abrir, escolha <b>Salvar como PDF</b> (no celular, use o botão de compartilhar) e envie pra quem quiser.</p>
-        </div>
-      </div>
+      <table class="parcelas teaser" aria-hidden="true"><tbody>
+        <tr><td>Entrada · 25%<small>${brl2(plano(v).entrada.tot)} em 3 vezes</small></td><td class="v">3x ${brl2(plano(v).entrada.parc)}</td></tr>
+      </tbody></table>
       <div class="gate" id="gate">
         <div class="gate-tit">Efetivar simulação do lote ${id(l)}</div>
-        <p class="gate-sub">Preencha para ver as parcelas e dar continuidade.</p>
+        <p class="gate-sub">Preencha para ver todas as parcelas e dar continuidade.</p>
         <form id="lead" novalidate>
           <div class="campo"><label for="f-nome">Nome completo</label><input id="f-nome" type="text" autocomplete="name" required></div>
           <div class="campo"><label for="f-zap">WhatsApp (com DDD)</label><input id="f-zap" type="tel" inputmode="tel" autocomplete="tel" placeholder="(48) 99999-9999" required></div>
@@ -360,6 +355,15 @@ function mostra(cod){
           <p class="erro" id="f-erro" hidden></p>
           <div class="acoes"><button class="b1" type="submit" id="f-enviar">Ver minha simulação</button></div>
         </form>
+      </div>
+      <div class="fundo" id="simulacao">
+        <p class="liberado" id="liberado" hidden>✅ Simulação liberada.</p>
+        ${linhas(v)}
+        ${promo ? `<p class="rod">Condição válida até 31/10/2026.</p>` : `<p class="rod">Valor da tabela de outubro/2026.</p>`}
+        <div class="escolha" style="padding-top:0">
+          <div class="acoes"><button class="b1" id="pdf-btn" type="button">📄 Gerar PDF da simulação</button></div>
+          <p class="dica">Na janela que abrir, escolha <b>Salvar como PDF</b> (no celular, use o botão de compartilhar) e envie pra quem quiser.</p>
+        </div>
       </div>
     </div>`;
   const sel = document.getElementById("lote"); sel.value = cod;
