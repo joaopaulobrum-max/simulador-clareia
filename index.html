@@ -300,9 +300,13 @@ function mostra(cod){
     </div>
     <div class="trava" id="trava">
       <div class="fundo" id="simulacao">
-        <p class="liberado" id="liberado" hidden>✅ Simulação liberada. Em breve a gente te chama no WhatsApp para dar continuidade.</p>
+        <p class="liberado" id="liberado" hidden>✅ Simulação liberada.</p>
         ${linhas(v)}
         ${promo ? `<p class="rod">Condição válida até 31/10/2026.</p>` : `<p class="rod">Valor da tabela de outubro/2026.</p>`}
+        <div class="escolha" style="padding-top:0">
+          <div class="acoes"><button class="b1" id="copiar" type="button">Copiar simulação</button><span class="copiado" id="ok" hidden></span></div>
+          <textarea id="texto" readonly hidden aria-label="Simulação para copiar"></textarea>
+        </div>
       </div>
       <div class="gate" id="gate">
         <div class="gate-tit">Efetivar simulação do lote ${id(l)}</div>
@@ -321,6 +325,12 @@ function mostra(cod){
     </div>`;
   const sel = document.getElementById("lote"); sel.value = cod;
   sel.addEventListener("change", e=>mostra(e.target.value));
+  document.getElementById("texto").value = textoCopia(l);
+  document.getElementById("copiar").addEventListener("click", ()=>{
+    const t = document.getElementById("texto"), ok = document.getElementById("ok");
+    const fallback = ()=>{ t.hidden=false; t.focus(); t.select(); ok.textContent="Texto selecionado. Toque e segure para copiar."; ok.hidden=false; };
+    try{ navigator.clipboard.writeText(t.value).then(()=>{ ok.textContent="Simulação copiada. É só colar no WhatsApp."; ok.hidden=false; }, fallback); }catch(e){ fallback(); }
+  });
   loteAtual = cod;
   ligaGate();
   marcaLote(cod);
