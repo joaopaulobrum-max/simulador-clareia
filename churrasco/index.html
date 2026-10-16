@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Churrasco Clareia · Confirme sua presença</title>
-<meta name="description" content="Confirme sua presença na abertura da temporada do Clareia Barrinha: sexta 30/10 às 12h, na Casa Clareia, Garopaba/SC.">
+<meta name="description" content="Confirme sua presença na abertura da temporada do Clareia Barrinha: sexta 30/10 às 12h, no condomínio, em Garopaba/SC.">
 <meta property="og:title" content="Churrasco Clareia · Abertura da Temporada">
-<meta property="og:description" content="Confirme sua presença: sexta 30/10, 12h, Casa Clareia · Barrinha, Garopaba/SC.">
+<meta property="og:description" content="Confirme sua presença: sexta 30/10, 12h, no Clareia · Barrinha, Garopaba/SC.">
 <meta property="og:image" content="https://clareiabarrinhasc.com.br/churrasco/convite.jpg">
 <link rel="icon" href="logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -71,7 +71,7 @@ footer a{color:var(--petroleo);font-weight:600;text-decoration:none}
 
   <div class="dados">
     <div><small>Quando</small><b>Sexta, 30/10</b><span>a partir das 12h</span></div>
-    <div><small>Onde</small><b>Casa Clareia</b><span>Barrinha · Garopaba/SC</span></div>
+    <div><small>Onde</small><b>No Clareia</b><span>Barrinha · Garopaba/SC</span></div>
   </div>
 
   <section class="cartao" id="confirma">
@@ -111,7 +111,7 @@ footer a{color:var(--petroleo);font-weight:600;text-decoration:none}
 // ---- evento na agenda (Google Agenda, com lembretes padrão do próprio app) ----
 const titulo = "Churrasco Clareia · Abertura da Temporada";
 const detalhes = "Contamos com você e ficamos muito felizes com a sua presença! Churrasco e chopp dentro do Clareia, com as novidades da temporada e as condições dos últimos lotes. Evento exclusivo para corretores. Dúvidas: João Brum, gerente de vendas · WhatsApp (48) 99211-1514";
-const local = "Casa Clareia, Clareia Barrinha, Garopaba - SC";
+const local = "Condomínio Clareia Barrinha, Garopaba - SC";
 const ag = new URLSearchParams({ action:"TEMPLATE", text:titulo, dates:"20261030T150000Z/20261030T190000Z", details:detalhes, location:local, ctz:"America/Sao_Paulo" });
 const AGENDA_URL = "https://calendar.google.com/calendar/render?" + ag.toString();
 document.getElementById("agenda").href = AGENDA_URL;
