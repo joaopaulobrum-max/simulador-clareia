@@ -501,6 +501,9 @@ let loteAtual = DESTAQUE;
 // depois de cadastrar uma vez, todas as simulações ficam liberadas (lembrado neste navegador)
 const lead = { nome:"", zap:"", tipo:"", liberado:false };
 try{ lead.liberado = localStorage.getItem("clareia-sim-liberado")==="1"; }catch(e){}
+// a 1ª simulação sai sem cadastro: o lote que abre a página e o primeiro lote que a pessoa escolher;
+// o quadro "Efetivar simulação" só aparece a partir do 2º lote escolhido
+const LIVRES = new Set([DESTAQUE]);
 
 const $ = s => document.querySelector(s);
 const tipoSel = () => document.querySelector('input[name="tipo"]:checked')?.value || "";
@@ -520,6 +523,8 @@ function ligaGate(){
   const trava = $("#trava"), form = $("#lead");
   const libera = ()=>{ trava.classList.add("aberta"); $("#liberado").hidden = false; };
   if(lead.liberado){ libera(); return; }
+  if(LIVRES.size < 2) LIVRES.add(loteAtual);
+  if(LIVRES.has(loteAtual)){ trava.classList.add("aberta"); return; }
   $("#f-nome").value = lead.nome; $("#f-zap").value = lead.zap;
   if(lead.tipo) document.querySelector(`input[name="tipo"][value="${lead.tipo}"]`).checked = true;
   $("#f-nome").addEventListener("input", e=>lead.nome = e.target.value);
