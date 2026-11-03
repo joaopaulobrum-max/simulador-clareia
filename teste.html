@@ -192,6 +192,8 @@ footer{font-size:11px;color:var(--suave);padding-block:20px 34px;border-top:1px 
 .consent{display:flex;gap:10px;align-items:flex-start;font-size:13px;margin-top:14px;cursor:pointer}
 .consent input{width:20px;height:20px;accent-color:var(--petroleo);flex:none;margin-top:1px}
 .q .dica{color:var(--suave)}
+.pronto .acoes{margin-top:8px}.pronto .b1{background:var(--laranja);color:#fff}.pronto .dica{margin-top:6px}
+.escolha .pronto .b2{background:var(--creme);color:var(--tinta)}
 /* editor da proposta: soma e percentuais ao vivo */
 .prop{background:var(--creme);border-radius:12px;padding:10px 12px}
 .prop table{width:100%;border-collapse:collapse;font-size:14px}
@@ -222,13 +224,19 @@ footer{font-size:11px;color:var(--suave);padding-block:20px 34px;border-top:1px 
   .prop .pcm{display:block;font-size:12px;color:var(--petroleo);font-weight:700;margin-top:2px}.prop .pcm small{font-weight:500;color:var(--suave)}
   .prop tfoot td:nth-child(2){text-align:right}}
 
-/* folha do PDF (impressão) */
+/* folha do PDF: impressa pelo navegador (Imprimir) ou desenhada pelo site e convertida em arquivo PDF (Enviar/Salvar) */
 #pdf{display:none}
 @media print{
   @page{size:A4;margin:16mm}
   body>*:not(#pdf){display:none!important}
   body{background:#fff;color:#111;font-family:var(--f-body);font-size:11pt}
   #pdf{display:block}
+}
+/* .ver = folha montada fora da tela, em A4 a 96 dpi (794 px, margens de 16 mm), para virar PDF */
+#pdf.ver{display:block;position:absolute;left:-10000px;top:0;width:794px;padding:60px;background:#fff;color:#111;font-family:var(--f-body);font-size:11pt;line-height:1.4;z-index:-1}
+#pdf.ver .pdf-pg2{margin-top:40px}
+#pdf.ver *{animation:none!important;transition:none!important}
+@media print, screen{
   .pdf-top{display:flex;align-items:center;gap:14px;border-bottom:2px solid #E0862A;padding-bottom:10px;margin-bottom:14px}
   .pdf-top img{height:40px;width:auto}
   .pdf-titulo{font-weight:700;font-size:12pt;color:#2E4245;line-height:1.3}
@@ -340,7 +348,9 @@ footer{font-size:11px;color:var(--suave);padding-block:20px 34px;border-top:1px 
         <label class="consent"><input type="checkbox" id="q-ok"><span>Estou ciente da lista de documentos e de que a efetivação está sujeita à análise da Barraleve, e autorizo o uso dos dados informados para a análise cadastral e, se aprovada, para a elaboração do contrato (LGPD, Lei 13.709/2018).</span></label>
         <p class="erro" id="q-erro" hidden></p>
         <div class="acoes"><button class="b1" type="submit" id="q-gerar">📄 Gerar o termo em PDF</button><button class="b2" type="button" id="q-fechar">Fechar</button></div>
-        <p class="dica">Na janela que abrir, escolha <b>Salvar como PDF</b> (no celular, use o botão de compartilhar). O termo sai em 2 páginas, com os seus dados e o espaço para assinatura. Os dados ficam só neste aparelho até você enviar o PDF.</p>
+        <p class="dica">O termo sai em 2 páginas, com os seus dados e o espaço para assinatura. Os dados ficam só neste aparelho até você enviar o PDF.</p>
+        <p class="dica" id="q-status" hidden></p>
+        <div class="pronto" id="q-pronto" hidden></div>
       </form>
       <div id="q-assina" hidden>
         <h3>Como assinar o termo</h3>
@@ -524,12 +534,14 @@ function mostra(cod){
             <button class="b1" id="prop-btn" type="button">✍️ Fazer proposta</button>
           </div>
           <p class="dica"><b>Simulação:</b> 1 página com as parcelas e o mapa. <b>Solicitar prioridade:</b> preencha seus dados e gere o termo com a condição da tabela. <b>Fazer proposta:</b> monte a sua condição de pagamento (entrada maior ou menor, outras parcelas) e gere a proposta.</p>
+          <p class="dica" id="sim-status" hidden></p>
+          <div class="pronto" id="sim-pronto" hidden></div>
         </div>
       </div>
     </div>`;
   const sel = document.getElementById("lote"); sel.value = cod;
   sel.addEventListener("change", e=>mostra(e.target.value));
-  document.getElementById("pdf-btn").addEventListener("click", ()=>{ montaPdf(l); ping("pdf", id(l)); window.print(); });
+  document.getElementById("pdf-btn").addEventListener("click", ()=>{ montaPdf(l); ping("pdf", id(l)); gerarPdf("sim", "#sim-status", "#sim-pronto"); });
   document.getElementById("prio-btn").addEventListener("click", ()=>abreQuadro("prio"));
   document.getElementById("prop-btn").addEventListener("click", ()=>abreQuadro("prop"));
   loteAtual = cod;
@@ -862,6 +874,7 @@ function abreQuadro(modo){
     $("#k-nome").value = prio.k.nome; $("#k-imob").value = prio.k.imob; $("#k-zap").value = prio.k.zap; $("#k-mail").value = prio.k.mail;
   }
   ping("quadro-"+modo, loteAtual);
+  libsPdf().catch(()=>{}); // já carrega as bibliotecas do PDF enquanto a pessoa preenche
   $("#quadro").scrollIntoView({behavior:"smooth"});
 }
 function atualizaQuadro(){ renderCab(); if(modoQ==="prop") calcProp(); $("#q-titulo").textContent = (modoQ==="prio" ? "Solicitação de prioridade · lote " : "Proposta de compra · lote ") + loteAtual; }
@@ -893,9 +906,72 @@ $("#q-form").addEventListener("submit", e=>{
   const erro = $("#q-erro"), msg = validaPrio();
   if(msg){ erro.textContent = msg; erro.hidden = false; erro.scrollIntoView({behavior:"smooth",block:"center"}); return; }
   erro.hidden = true;
-  montaTermo(loteQ(), modoQ); ping("termo-"+modoQ, loteAtual); window.print();
-  $("#q-assina").hidden = false; $("#q-assina").scrollIntoView({behavior:"smooth"});
+  montaTermo(loteQ(), modoQ); ping("termo-"+modoQ, loteAtual);
+  gerarPdf(modoQ, "#q-status", "#q-pronto").then(ok=>{ if(ok){ $("#q-assina").hidden = false; } });
 });
+
+// ---- PDF de verdade, gerado no navegador (funciona no celular e em navegador dentro de app, onde "Imprimir" não abre) ----
+let pdfBlob = null, pdfNome = "";
+function carrega(src){ return new Promise((ok, err)=>{ if(document.querySelector(`script[src="${src}"]`)?.dataset.ok) return ok(); const s = document.createElement("script"); s.src = src; s.onload = ()=>{ s.dataset.ok = "1"; ok(); }; s.onerror = ()=>err(new Error("não carregou " + src.split("/").pop())); document.head.appendChild(s); }); }
+async function libsPdf(){ if(window.html2canvas && window.jspdf) return; await Promise.all([carrega("https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"), carrega("https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js")]); }
+async function gerarPdf(tipo, selStatus, selPronto){
+  const st = $(selStatus), pr = $(selPronto), pdfEl = document.getElementById("pdf");
+  const diga = m => { st.hidden = false; st.innerHTML = m; };
+  pr.hidden = true; pdfBlob = null;
+  diga("⏳ Gerando o PDF… leva alguns segundos.");
+  try{
+    await libsPdf();
+    pdfEl.classList.add("ver");
+    await new Promise(r=>setTimeout(r, 80));
+    const PH = 1123, MARG = 60; // A4 em px (96 dpi) e margem de 16 mm
+    const pg2 = pdfEl.querySelector(".pdf-pg2"), pg2Top = pg2 ? pg2.offsetTop : null;
+    const canvas = await html2canvas(pdfEl, { scale: 2, backgroundColor: "#ffffff", logging: false, windowWidth: 794, scrollX: 0, scrollY: 0 });
+    pdfEl.classList.remove("ver");
+    const total = canvas.height / 2, { jsPDF } = window.jspdf, pdf = new jsPDF({ unit: "mm", format: "a4" });
+    const starts = pg2Top != null ? [0, pg2Top] : [0];
+    let primeira = true;
+    for(let i = 0; i < starts.length; i++){
+      let y = starts[i]; const fim = starts[i+1] ?? total;
+      while(y < fim){
+        const topo = y === 0 ? 0 : MARG, h = Math.min(PH - topo, fim - y);
+        const c = document.createElement("canvas"); c.width = canvas.width; c.height = Math.round(h * 2);
+        const g = c.getContext("2d"); g.fillStyle = "#fff"; g.fillRect(0, 0, c.width, c.height);
+        g.drawImage(canvas, 0, Math.round(y * 2), canvas.width, Math.round(h * 2), 0, 0, canvas.width, Math.round(h * 2));
+        if(!primeira) pdf.addPage(); primeira = false;
+        pdf.addImage(c.toDataURL("image/jpeg", 0.92), "JPEG", 0, topo / PH * 297, 210, h / PH * 297);
+        y += h;
+      }
+    }
+    pdfBlob = pdf.output("blob");
+    pdfNome = `Clareia-${tipo === "sim" ? "simulacao" : tipo === "prio" ? "solicitacao-prioridade" : "proposta"}-${loteAtual}.pdf`;
+    const nPag = pdf.getNumberOfPages();
+    diga(`✅ PDF pronto (${nPag} página${nPag > 1 ? "s" : ""}). Toque em <b>Enviar ou salvar</b>: no celular abre o compartilhar (WhatsApp, Arquivos…); no computador baixa o arquivo.`);
+    pr.innerHTML = `<div class="acoes"><button type="button" class="b1 enviar">📤 Enviar ou salvar o PDF</button><button type="button" class="b2 imprimir">🖨️ Imprimir</button></div><p class="dica">Não abriu nada? Se você está vendo esta página dentro de um aplicativo (WhatsApp, Instagram…), toque nos três pontos e escolha <b>Abrir no navegador</b> (Safari ou Chrome) e gere de novo.</p>`;
+    pr.hidden = false;
+    pr.querySelector(".enviar").addEventListener("click", enviarPdf);
+    pr.querySelector(".imprimir").addEventListener("click", ()=>{ try{ window.print(); }catch(e){} });
+    pr.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    return true;
+  }catch(e){
+    pdfEl.classList.remove("ver");
+    console.warn("pdf:", e);
+    diga(`⚠️ Não consegui gerar o arquivo PDF (${esc(e.message || e)}). Tente de novo ou use <b>Imprimir</b> e escolha "Salvar como PDF".`);
+    pr.innerHTML = `<div class="acoes"><button type="button" class="b2 imprimir">🖨️ Imprimir</button></div>`; pr.hidden = false;
+    pr.querySelector(".imprimir").addEventListener("click", ()=>{ try{ window.print(); }catch(e){} });
+    return false;
+  }
+}
+async function enviarPdf(){
+  if(!pdfBlob) return;
+  const file = new File([pdfBlob], pdfNome, { type: "application/pdf" });
+  if(navigator.canShare && navigator.canShare({ files: [file] })){
+    try{ await navigator.share({ files: [file], title: pdfNome }); return; }catch(e){ if(e.name === "AbortError") return; }
+  }
+  const url = URL.createObjectURL(pdfBlob);
+  const a = document.createElement("a"); a.href = url; a.download = pdfNome; a.rel = "noopener"; document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(()=>{ try{ window.open(url, "_blank"); }catch(e){} }, 400); // iPhone sem "download": abre o PDF numa aba, de onde dá para compartilhar
+  setTimeout(()=>URL.revokeObjectURL(url), 120000);
+}
 function dlComprador(c, n){
   const keys = c.tipo==="PJ" ? PJ_KEYS : PF_KEYS, full = ["nome","razao","end","pjend"];
   return `<div class="pdf-h2">Comprador ${n} · ${c.tipo==="PJ" ? "pessoa jurídica" : "pessoa física"}</div><div class="pdf-dl">${Object.entries(keys).map(([k,lab])=>`<div class="${full.includes(k)?"full":""}"><small>${lab}</small>${esc(k==="nasc" ? fmtData(c[k]) : c[k]) || "&nbsp;"}</div>`).join("")}</div>`;
