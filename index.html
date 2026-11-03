@@ -1,3 +1,7 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Simule seu Lote Clareia</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Montserrat:wght@400;500;600;700&display=swap">
@@ -170,13 +174,73 @@ footer{font-size:11px;color:var(--suave);padding-block:20px 34px;border-top:1px 
 .cta .b2{margin-top:12px}
 .dica{font-size:12px;color:#A9BBB9;margin:8px 0 0}
 
-/* folha do PDF (impressão) */
+/* quadro "Solicitar prioridade" / "Fazer proposta": abre abaixo do simulador, com as condições do lote visíveis em cima */
+.acoes.tres button{flex:1 1 160px}
+.q{background:var(--branco);border:2px solid var(--petroleo);border-radius:14px;padding:18px;margin-top:4px}
+.q-cab{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap;padding-bottom:12px;border-bottom:1px solid var(--linha)}
+.q-cab .lote{font-family:var(--f-display);font-size:38px;font-weight:600;line-height:1}
+.q-cab .sub{font-size:13px;color:var(--suave)}
+.q-cab .val{text-align:right}.q-cab .val b{display:block;font-size:22px;line-height:1.1}.q-cab .val small{display:block;color:var(--suave);font-size:12px}
+.q h3{font-family:var(--f-display);font-size:22px;font-weight:600;margin:18px 0 8px;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.q .campo label,.q .campo .rot{color:var(--tinta)}
+.q .campo input[type=text],.q .campo input[type=tel],.q .campo input[type=email],.q .campo input[type=date],.q select{width:100%;font:inherit;font-size:16px;padding:10px 12px;border:1.5px solid var(--linha);border-radius:9px;background:var(--papel);color:var(--tinta)}
+.q .campo input:focus-visible,.q select:focus-visible{outline:3px solid var(--onda);outline-offset:1px}
+.q select{background-color:var(--papel);border-color:var(--linha)}
+.q .radios label{color:var(--tinta)}
+.q .grid2{display:grid;grid-template-columns:1fr 1fr;gap:0 12px}
+.q .mini-btn{padding:8px 12px;font-size:13px;font-weight:600}
+.q .erro{background:#FBE3E0;color:#8A2A24}
+.q .acoes .b1{background:var(--laranja);color:#fff}
+.docs{background:var(--creme);border-radius:10px;padding:10px 12px;font-size:13px;margin-top:14px}
+.docs ul{margin:4px 0 0;padding-left:18px}.docs li{margin:3px 0}
+.consent{display:flex;gap:10px;align-items:flex-start;font-size:13px;margin-top:14px;cursor:pointer}
+.consent input{width:20px;height:20px;accent-color:var(--petroleo);flex:none;margin-top:1px}
+.q .dica{color:var(--suave)}
+.pronto .acoes{margin-top:8px}.pronto .b1{background:var(--laranja);color:#fff}.pronto .dica{margin-top:6px}
+.escolha .pronto .b2{background:var(--creme);color:var(--tinta)}
+/* editor da proposta: soma e percentuais ao vivo */
+.prop{background:var(--creme);border-radius:12px;padding:10px 12px}
+.prop table{width:100%;border-collapse:collapse;font-size:14px}
+.prop th{text-align:left;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--suave);padding:4px 6px;font-weight:600}
+.prop td{padding:6px;border-top:1px solid var(--linha);vertical-align:middle}
+.prop td.n{white-space:nowrap;text-align:right;font-variant-numeric:tabular-nums}
+.prop input{font:inherit;font-size:15px;padding:8px 10px;border:1.5px solid var(--linha);border-radius:8px;background:#fff;color:var(--tinta);text-align:right;width:100%;min-width:110px}
+.prop input.qt{width:60px;min-width:0;text-align:center}
+.prop input.desc{text-align:left;min-width:120px}
+.prop .pc{font-weight:700;color:var(--petroleo)}
+.prop .parc{font-size:12px;color:var(--suave);display:block}
+.prop tfoot td{font-weight:700;border-top:2px solid var(--petroleo)}
+.prop tfoot tr+tr td{border-top:1px solid var(--linha);font-weight:600;color:var(--suave)}
+.resumo{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
+.resumo div{background:#fff;border-radius:10px;padding:10px;border:1px solid var(--linha)}
+.resumo b{display:block;font-size:18px;font-variant-numeric:tabular-nums;line-height:1.2}
+.resumo span{font-size:11.5px;color:var(--suave)}
+.resumo .ok{color:#237A43}.resumo .abaixo{color:#B8321F}.resumo .acima{color:#8A6D00}
+.assina{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:4px}
+.assina div{background:var(--creme);border-radius:10px;padding:12px;font-size:13px}
+.assina b{display:block;margin-bottom:4px}.assina ol,.assina p{margin:4px 0 0}.assina ol{padding-left:18px}
+.assina a{color:var(--petroleo);font-weight:600}
+.prop .pcm{display:none}
+.prop td:nth-child(2){width:36%}.prop td:nth-child(3){width:66px}
+@media (max-width:620px){.q .grid2,.assina{grid-template-columns:1fr}.resumo{grid-template-columns:1fr 1fr}.prop{padding:8px 6px}
+  .prop th:nth-child(4),.prop td:nth-child(4),.prop th:nth-child(5),.prop td:nth-child(5){display:none}
+  .prop td{padding:6px 4px}.prop input{min-width:0;padding:8px 6px;font-size:14px}.prop input.qt{width:46px}.prop td:nth-child(2){width:40%}.prop td:nth-child(3){width:54px}
+  .prop .pcm{display:block;font-size:12px;color:var(--petroleo);font-weight:700;margin-top:2px}.prop .pcm small{font-weight:500;color:var(--suave)}
+  .prop tfoot td:nth-child(2){text-align:right}}
+
+/* folha do PDF: impressa pelo navegador (Imprimir) ou desenhada pelo site e convertida em arquivo PDF (Enviar/Salvar) */
 #pdf{display:none}
 @media print{
   @page{size:A4;margin:16mm}
   body>*:not(#pdf){display:none!important}
   body{background:#fff;color:#111;font-family:var(--f-body);font-size:11pt}
   #pdf{display:block}
+}
+/* .ver = folha montada fora da tela, em A4 a 96 dpi (794 px, margens de 16 mm), para virar PDF */
+#pdf.ver{display:block;position:absolute;left:-10000px;top:0;width:794px;padding:60px;background:#fff;color:#111;font-family:var(--f-body);font-size:11pt;line-height:1.4;z-index:-1}
+#pdf.ver .pdf-pg2{margin-top:40px}
+#pdf.ver *{animation:none!important;transition:none!important}
+@media print, screen{
   .pdf-top{display:flex;align-items:center;gap:14px;border-bottom:2px solid #E0862A;padding-bottom:10px;margin-bottom:14px}
   .pdf-top img{height:40px;width:auto}
   .pdf-titulo{font-weight:700;font-size:12pt;color:#2E4245;line-height:1.3}
@@ -195,7 +259,7 @@ footer{font-size:11px;color:var(--suave);padding-block:20px 34px;border-top:1px 
   .pdf-tab small{font-weight:400;color:#62777A}
   .pdf-txt{margin:12px 0 8px;font-size:10pt;color:#26383A}
   .pdf-med{margin:4px 0 10px;font-size:9.5pt;color:#26383A}
-  .pdf-mapa{position:relative;width:62%;margin:0 auto 8px;break-inside:avoid}
+  .pdf-mapa{position:relative;width:36%;margin:0 auto 6px;break-inside:avoid}
   .pdf-mapa img{display:block;width:100%;height:auto;border-radius:6px}
   .pdf-pin{position:absolute;width:7%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;background:#E0862A;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:7pt;line-height:1;border:1.5px solid #fff;box-shadow:0 0 0 4px rgba(224,134,42,.45)}
   .pdf-dot{position:absolute;width:3.5%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:4pt;line-height:1;border:.5px solid #fff}
@@ -203,6 +267,24 @@ footer{font-size:11px;color:var(--suave);padding-block:20px 34px;border-top:1px 
   .pdf-mapa-leg{font-size:8pt;color:#62777A;text-align:center;margin-top:4px}
   .pdf-meta{font-size:9pt;color:#62777A;margin:0}
   .pdf-leg{font-size:7.5pt;color:#777;border-top:1px solid #E2DACB;padding-top:6px;margin-top:10px;line-height:1.35}
+  /* termo de prioridade / proposta: 2 páginas */
+  .pdf-pg2{break-before:page;page-break-before:always}
+  .pdf-h2{font-family:var(--f-display);font-size:13.5pt;font-weight:600;color:#2E4245;margin:7px 0 3px;border-bottom:1px solid #E2DACB;padding-bottom:1px}
+  .pdf-pg2 .pdf-h2:first-child{margin-top:0}
+  .pdf-box{border:1px solid #E2DACB;border-radius:6px;padding:7px 10px;margin:6px 0 8px;font-size:10.5pt}
+  .pdf-box b{color:#E0862A}
+  .pdf-tab td.pc{color:#2E4245;font-weight:600;white-space:nowrap}
+  .pdf-dl{display:grid;grid-template-columns:repeat(3,1fr);gap:0 12px;font-size:8.8pt;line-height:1.25}
+  .pdf-dl.c4{grid-template-columns:repeat(4,1fr)}
+  .pdf-dl div{border-bottom:1px dotted #CFC6B6;padding:2px 0 1px;min-height:17pt}
+  .pdf-dl small{display:block;font-size:6.3pt;color:#62777A;text-transform:uppercase;letter-spacing:.06em}
+  .pdf-dl .full{grid-column:1/-1}
+  .pdf-decl{font-size:8.5pt;line-height:1.35;margin:4px 0}
+  .pdf-decl ol{margin:2px 0 0;padding-left:16px}
+  .pdf-docs{font-size:8.5pt;line-height:1.35;margin:3px 0;padding-left:16px}
+  .pdf-ass{display:grid;grid-template-columns:1fr 1fr;gap:30px 48px;margin:34px 10px 0;break-inside:avoid}
+  .pdf-ass div{border-top:1px solid #2E4245;padding-top:5px;font-size:8pt;line-height:1.3;text-align:center;color:#62777A}
+  .pdf-ass b{display:block;font-size:9.5pt;color:#26383A;margin-bottom:1px}
   #pdf,#pdf *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
 }
 
@@ -243,6 +325,46 @@ footer{font-size:11px;color:var(--suave);padding-block:20px 34px;border-top:1px 
   <section style="padding-top:0" id="simulador">
     <h2 id="titulo">Lote em destaque</h2>
     <div class="destaque" id="destaque"></div>
+  </section>
+
+  <!-- quadro: abre ao tocar em "Solicitar prioridade" ou "Fazer proposta"; gera o termo em PDF (2 páginas) -->
+  <section style="padding-top:0" id="quadro" hidden>
+    <h2 id="q-titulo">Solicitação de prioridade</h2>
+    <p class="lead" id="q-lead"></p>
+    <div class="q">
+      <div class="q-cab" id="q-cab"></div>
+      <div id="q-prop" hidden>
+        <h3>Sua proposta de pagamento</h3>
+        <p class="lead" style="font-size:13px;margin-bottom:8px">Digite os valores do jeito que você quer pagar. A soma e os percentuais se atualizam sozinhos, sempre em relação ao valor do lote.</p>
+        <div class="prop" id="prop"></div>
+      </div>
+      <form id="q-form" novalidate>
+        <div id="compradores"></div>
+        <div class="acoes" style="margin-top:8px"><button type="button" class="b2 mini-btn" id="add-c2">+ Adicionar 2º comprador</button></div>
+        <h3>Corretor(a) responsável <small style="font-family:var(--f-body);font-size:12px;font-weight:400;color:var(--suave)">se tiver</small></h3>
+        <div class="grid2">
+          <div class="campo"><label for="k-nome">Nome</label><input id="k-nome" type="text" autocomplete="off"></div>
+          <div class="campo"><label for="k-imob">Imobiliária</label><input id="k-imob" type="text" autocomplete="off"></div>
+          <div class="campo"><label for="k-zap">WhatsApp</label><input id="k-zap" type="tel" inputmode="tel" autocomplete="off"></div>
+          <div class="campo"><label for="k-mail">E-mail</label><input id="k-mail" type="email" autocomplete="off"></div>
+        </div>
+        <div class="docs" id="docs"></div>
+        <label class="consent"><input type="checkbox" id="q-ok"><span>Estou ciente da lista de documentos e de que a efetivação está sujeita à análise da Barraleve, e autorizo o uso dos dados informados para a análise cadastral e, se aprovada, para a elaboração do contrato (LGPD, Lei 13.709/2018).</span></label>
+        <p class="erro" id="q-erro" hidden></p>
+        <div class="acoes"><button class="b1" type="submit" id="q-gerar">📄 Gerar o termo em PDF</button><button class="b2" type="button" id="q-fechar">Fechar</button></div>
+        <p class="dica">O termo sai em 2 páginas, com os seus dados e o espaço para assinatura. Os dados ficam só neste aparelho até você enviar o PDF.</p>
+        <p class="dica" id="q-status" hidden></p>
+        <div class="pronto" id="q-pronto" hidden></div>
+      </form>
+      <div id="q-assina" hidden>
+        <h3>Como assinar o termo</h3>
+        <div class="assina">
+          <div><b>🇧🇷 Pelo GOV.br (grátis)</b><ol><li>Salve o PDF no celular ou no computador.</li><li>Acesse <a href="https://assinador.iti.br" target="_blank" rel="noopener">assinador.iti.br</a> e entre com a sua conta gov.br (nível prata ou ouro).</li><li>Envie o PDF, posicione a assinatura na página 2 e baixe o arquivo assinado.</li><li>Mande o PDF assinado para o seu corretor pelo WhatsApp.</li></ol></div>
+          <div><b>✍️ Por plataforma de assinatura</b><p>Prefere assinar por link? Avise o corretor: ele envia o termo por uma plataforma de assinatura eletrônica (ZapSign, Clicksign ou similar) e você assina pelo WhatsApp ou e-mail, sem instalar nada.</p></div>
+          <div><b>🖨️ Impresso, de próprio punho</b><p>Imprima o PDF, assine nos campos da página 2, fotografe ou digitalize e envie ao corretor junto com os documentos da lista.</p></div>
+        </div>
+      </div>
+    </div>
   </section>
 
   <section style="padding-top:0" id="onde">
@@ -289,10 +411,10 @@ footer{font-size:11px;color:var(--suave);padding-block:20px 34px;border-top:1px 
 <div id="pdf" aria-hidden="true">
   <div class="pdf-top">
     <img id="pdf-logo" alt="Clareia">
-    <div class="pdf-titulo">Clareia Barrinha · Garopaba/SC<br><span>Simulação de pagamento · tabela de novembro/2026</span></div>
+    <div class="pdf-titulo">Clareia Barrinha · Garopaba/SC<br><span id="pdf-sub">Simulação de pagamento · tabela de novembro/2026</span></div>
   </div>
   <div id="pdf-corpo"></div>
-  <p class="pdf-leg">Condição de pagamento: 25% de entrada em 3x · 22% em 11 mensais pré-chaves · 18% em 1 anual · 7% na entrega · 28% em 36x pelo financiamento direto com juros de 1% a.m. (Tabela Price). A tabela é reajustada mensalmente pelo INCC. Valores arredondados ao centavo. Imagens meramente ilustrativas. Projeto de arquitetura: Arte Arquitetura (CAU A11835-4). Paisagismo: Krebs+ Arquitetura Paisagística (CAU A7292-3).</p>
+  <p class="pdf-leg" id="pdf-leg">Condição de pagamento: 25% de entrada em 3x · 22% em 11 mensais pré-chaves · 18% em 1 anual · 7% na entrega · 28% em 36x pelo financiamento direto com juros de 1% a.m. (Tabela Price). A tabela é reajustada mensalmente pelo INCC. Valores arredondados ao centavo. Imagens meramente ilustrativas. Projeto de arquitetura: Arte Arquitetura (CAU A11835-4). Paisagismo: Krebs+ Arquitetura Paisagística (CAU A7292-3).</p>
 </div>
 
 <script>
@@ -410,17 +532,26 @@ function mostra(cod){
         ${linhas(v)}
         ${promo ? `<p class="rod">Condição válida até 30/11/2026.</p>` : `<p class="rod">Valor da tabela de novembro/2026.</p>`}
         <div class="escolha" style="padding-top:0">
-          <div class="acoes"><button class="b1" id="pdf-btn" type="button">📄 Gerar PDF da simulação</button></div>
-          <p class="dica">Na janela que abrir, escolha <b>Salvar como PDF</b> (no celular, use o botão de compartilhar) e envie pra quem quiser.</p>
+          <div class="acoes tres">
+            <button class="b1" id="pdf-btn" type="button">📄 Simulação em PDF</button>
+            <button class="b1" id="prio-btn" type="button">📝 Solicitar prioridade</button>
+            <button class="b1" id="prop-btn" type="button">✍️ Fazer proposta</button>
+          </div>
+          <p class="dica"><b>Simulação:</b> 1 página com as parcelas e o mapa. <b>Solicitar prioridade:</b> preencha seus dados e gere o termo com a condição da tabela. <b>Fazer proposta:</b> monte a sua condição de pagamento (entrada maior ou menor, outras parcelas) e gere a proposta.</p>
+          <p class="dica" id="sim-status" hidden></p>
+          <div class="pronto" id="sim-pronto" hidden></div>
         </div>
       </div>
     </div>`;
   const sel = document.getElementById("lote"); sel.value = cod;
   sel.addEventListener("change", e=>mostra(e.target.value));
-  document.getElementById("pdf-btn").addEventListener("click", ()=>{ montaPdf(l); ping("pdf", id(l)); window.print(); });
+  document.getElementById("pdf-btn").addEventListener("click", ()=>{ montaPdf(l); ping("pdf", id(l)); gerarPdf("sim", "#sim-status", "#sim-pronto"); });
+  document.getElementById("prio-btn").addEventListener("click", ()=>abreQuadro("prio"));
+  document.getElementById("prop-btn").addEventListener("click", ()=>abreQuadro("prop"));
   loteAtual = cod;
   ligaGate();
   marcaLote(cod);
+  if(modoQ) atualizaQuadro();
 }
 
 // ---- mapa: posição (pixels no mapa 1200×1140 da tabela out/26) do número de cada um dos 72 lotes ----
@@ -557,6 +688,9 @@ function montaPdf(l){
   const v = preco(l), p = plano(v), promo = !!l[4];
   const hoje = new Date().toLocaleDateString("pt-BR");
   document.getElementById("pdf-logo").src = document.querySelector(".logo").src;
+  document.getElementById("pdf-sub").textContent = "Simulação de pagamento · tabela de novembro/2026";
+  document.getElementById("pdf-leg").textContent = LEG_SIM;
+  document.getElementById("pdf").classList.remove("pdf-termo");
   document.getElementById("pdf-corpo").innerHTML = `
     <h1>Lote ${id(l)} <small>Quadra ${l[0]} · ${m2(l[2])} · ${brl0(v/l[2])}/m²</small></h1>
     ${CONF[id(l)] ? `<p class="pdf-med"><b>Medidas e confrontações</b> <b style="color:#E0862A">· área total ${m2(l[2])}:</b> ${medidas(id(l)).join(" · ").replace(/<\/?span>/g,"")}. <small>${AVISO_MED}</small></p>` : ``}
@@ -578,6 +712,331 @@ function montaPdf(l){
     </div>
     <p class="pdf-meta">Simulação gerada em ${hoje}${lead.nome ? ` para ${lead.nome}` : ""}. Reserva mediante solicitação de prioridade, sujeita à análise da loteadora.</p>`;
 }
+const LEG_SIM = "Condição de pagamento: 25% de entrada em 3x · 22% em 11 mensais pré-chaves · 18% em 1 anual · 7% na entrega · 28% em 36x pelo financiamento direto com juros de 1% a.m. (Tabela Price). A tabela é reajustada mensalmente pelo INCC. Valores arredondados ao centavo. Imagens meramente ilustrativas. Projeto de arquitetura: Arte Arquitetura (CAU A11835-4). Paisagismo: Krebs+ Arquitetura Paisagística (CAU A7292-3).";
+const LEG_TERMO = "Documento gerado pelo simulador em clareiabarrinhasc.com.br. Pode ser assinado digitalmente pelo GOV.br (assinador.iti.br), por plataforma de assinatura eletrônica ou de próprio punho. A tabela é reajustada mensalmente pelo INCC. Imagens meramente ilustrativas. Projeto de arquitetura: Arte Arquitetura (CAU A11835-4). Paisagismo: Krebs+ Arquitetura Paisagística (CAU A7292-3).";
+
+// ---- quadro "Solicitar prioridade" / "Fazer proposta": dados dos compradores (PF/PJ), proposta livre com percentuais e termo em PDF ----
+// campos = os que o formulário oficial de reserva da Barraleve (GK Realty) pede + o que o contrato precisa depois
+const CIVIL = ["Solteiro(a), sem união estável","União estável","Casado(a) · comunhão parcial de bens","Casado(a) · comunhão universal de bens","Casado(a) · separação total de bens","Separado(a) judicialmente","Divorciado(a)","Viúvo(a)"];
+const DOC_CIVIL = {
+  "Solteiro(a), sem união estável":"Certidão de nascimento", "União estável":"Escritura de união estável",
+  "Casado(a) · comunhão parcial de bens":"Certidão de casamento", "Casado(a) · comunhão universal de bens":"Certidão de casamento e pacto antenupcial",
+  "Casado(a) · separação total de bens":"Certidão de casamento e pacto antenupcial", "Separado(a) judicialmente":"Certidão de casamento com a separação averbada",
+  "Divorciado(a)":"Certidão de casamento com o divórcio averbado", "Viúvo(a)":"Certidão de casamento com a averbação do óbito"
+};
+const DOCS_PF = ["RG e CPF","Comprovante de residência (água, luz ou telefone)"];
+const DOCS_PJ = ["Contrato social","Cadastro completo dos sócios (RG, CPF, comprovante de residência e certidão de estado civil de cada um)"];
+const PF_KEYS = {nome:"Nome completo",cpf:"CPF",rg:"RG / órgão emissor",nasc:"Data de nascimento",nac:"Nacionalidade",prof:"Profissão",civil:"Estado civil",end:"Endereço residencial",cid:"Cidade / UF",cep:"CEP",mail:"E-mail",zap:"WhatsApp"};
+const PJ_KEYS = {razao:"Razão social",cnpj:"CNPJ",pjend:"Endereço da sede",pjmail:"E-mail",pjzap:"WhatsApp",repnome:"Representante legal",repcpf:"CPF do representante",repcargo:"Cargo"};
+const PROP_LINHAS = [
+  {k:"entrada",nome:"Entrada",pct:.25,qt:3},
+  {k:"mensais",nome:"Mensais pré-chaves",pct:.22,qt:11},
+  {k:"anual",nome:"Parcela anual",pct:.18,qt:1},
+  {k:"entrega",nome:"Na entrega",pct:.07,qt:1},
+  {k:"fin",nome:"Financiamento direto",pct:.28,qt:36,juros:true,sub:"juros de 1% a.m. (Tabela Price)",pdf:"Financiamento direto (juros 1% a.m.)"},
+  {k:"outro",nome:"Outro",pct:0,qt:1,livre:true}
+];
+let modoQ = null; // "prio" = condição da tabela · "prop" = condição montada pela pessoa
+const prio = { c:[{tipo:"PF",nac:"brasileira"}, null], k:{nome:"",imob:"",zap:"",mail:""}, ok:false, prop:{val:{},qt:{},desc:""} };
+try{ const s = JSON.parse(localStorage.getItem("clareia-prio")||"null"); if(s && s.c && s.c[0]){ prio.c = s.c; prio.k = s.k||prio.k; prio.prop = s.prop||prio.prop; } }catch(e){}
+function salvaPrio(){ try{ localStorage.setItem("clareia-prio", JSON.stringify({c:prio.c,k:prio.k,prop:prio.prop})); }catch(e){} }
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const fmtData = s => /^\d{4}-\d{2}-\d{2}$/.test(s||"") ? s.split("-").reverse().join("/") : (s||"");
+// "150.000,00", "150000", "150000.50" → número
+const parseBR = s => { s=String(s||"").trim().replace(/[R$\s]/g,""); if(!s) return 0; if(s.includes(",")) s=s.replace(/\./g,"").replace(",","."); else if(!/\.\d{1,2}$/.test(s)) s=s.replace(/\./g,""); const n=parseFloat(s); return isFinite(n)&&n>0 ? n : 0; };
+const fmtIn = n => n ? n.toLocaleString("pt-BR",{minimumFractionDigits:2,maximumFractionDigits:2}) : "";
+const pc1 = x => (Math.round(x*1000)/10).toLocaleString("pt-BR",{minimumFractionDigits:1,maximumFractionDigits:1}) + "%";
+const priceParc = (tot,n,i=0.01) => n>0 ? tot*i/(1-Math.pow(1+i,-n)) : 0;
+const loteQ = () => LOTES.find(x=>id(x)===loteAtual);
+
+function blocoComprador(n){
+  const sel = `<select data-k="civil"><option value="">Selecione</option>${CIVIL.map(c=>`<option>${c}</option>`).join("")}</select>`;
+  return `<div class="comprador" id="c${n}">
+    <h3>Comprador ${n} ${n===2 ? `<button type="button" class="b2 mini-btn" id="rm-c2">remover</button>` : ``}</h3>
+    <div class="campo"><div class="radios"><label><input type="radio" name="c${n}-tipo" value="PF"> Pessoa física</label><label><input type="radio" name="c${n}-tipo" value="PJ"> Pessoa jurídica</label></div></div>
+    <div class="pf">
+      <div class="campo"><label>Nome completo</label><input type="text" data-k="nome" autocomplete="name"></div>
+      <div class="grid2">
+        <div class="campo"><label>CPF</label><input type="text" inputmode="numeric" data-k="cpf" placeholder="000.000.000-00"></div>
+        <div class="campo"><label>RG e órgão emissor</label><input type="text" data-k="rg"></div>
+        <div class="campo"><label>Data de nascimento</label><input type="date" data-k="nasc"></div>
+        <div class="campo"><label>Nacionalidade</label><input type="text" data-k="nac"></div>
+        <div class="campo"><label>Profissão</label><input type="text" data-k="prof"></div>
+        <div class="campo"><label>Estado civil</label>${sel}</div>
+      </div>
+      <div class="campo"><label>Endereço residencial (rua, nº, complemento, bairro)</label><input type="text" data-k="end" autocomplete="street-address"></div>
+      <div class="grid2">
+        <div class="campo"><label>Cidade / UF</label><input type="text" data-k="cid"></div>
+        <div class="campo"><label>CEP</label><input type="text" inputmode="numeric" data-k="cep"></div>
+        <div class="campo"><label>E-mail</label><input type="email" data-k="mail" autocomplete="email"></div>
+        <div class="campo"><label>WhatsApp (com DDD)</label><input type="tel" inputmode="tel" data-k="zap"></div>
+      </div>
+    </div>
+    <div class="pj" hidden>
+      <div class="campo"><label>Razão social</label><input type="text" data-k="razao"></div>
+      <div class="grid2">
+        <div class="campo"><label>CNPJ</label><input type="text" inputmode="numeric" data-k="cnpj" placeholder="00.000.000/0000-00"></div>
+        <div class="campo"><label>E-mail da empresa</label><input type="email" data-k="pjmail"></div>
+      </div>
+      <div class="campo"><label>Endereço da sede (rua, nº, bairro, cidade/UF, CEP)</label><input type="text" data-k="pjend"></div>
+      <div class="grid2">
+        <div class="campo"><label>Representante legal (nome)</label><input type="text" data-k="repnome"></div>
+        <div class="campo"><label>CPF do representante</label><input type="text" inputmode="numeric" data-k="repcpf"></div>
+        <div class="campo"><label>Cargo</label><input type="text" data-k="repcargo"></div>
+        <div class="campo"><label>WhatsApp (com DDD)</label><input type="tel" inputmode="tel" data-k="pjzap"></div>
+      </div>
+    </div>
+  </div>`;
+}
+function renderCompradores(){
+  $("#compradores").innerHTML = blocoComprador(1) + (prio.c[1] ? blocoComprador(2) : "");
+  [1,2].forEach(n=>{
+    const c = prio.c[n-1]; if(!c) return;
+    const box = $(`#c${n}`);
+    box.querySelector(`input[name="c${n}-tipo"][value="${c.tipo||"PF"}"]`).checked = true;
+    box.querySelectorAll("[data-k]").forEach(el=>{ if(c[el.dataset.k]!=null) el.value = c[el.dataset.k]; });
+    mostraTipo(n);
+  });
+  $("#add-c2").hidden = !!prio.c[1];
+  renderDocs();
+}
+function mostraTipo(n){ const c = prio.c[n-1], box = $(`#c${n}`); box.querySelector(".pf").hidden = c.tipo==="PJ"; box.querySelector(".pj").hidden = c.tipo!=="PJ"; }
+function docsDe(c){
+  if(c.tipo==="PJ") return DOCS_PJ;
+  return [DOC_CIVIL[c.civil] || "Certidão conforme o estado civil (nascimento, casamento ou união estável)", ...DOCS_PF];
+}
+function renderDocs(){
+  $("#docs").innerHTML = `<b>Documentos a enviar junto com o termo</b><ul>${prio.c.filter(Boolean).map((c,i)=>`<li><b>Comprador ${i+1}${c.tipo==="PJ"?" (empresa)":""}:</b> ${docsDe(c).join(" · ")}</li>`).join("")}</ul>`;
+}
+function renderCab(){
+  const l = loteQ(), v = preco(l), promo = !!l[4];
+  $("#q-cab").innerHTML = `<div><div class="lote">${id(l)}</div><div class="sub">Quadra ${l[0]} · ${m2(l[2])} · ${brl0(v/l[2])}/m²</div></div>
+    <div class="val"><b>${brl0(v)}</b><small>${promo ? `condição especial (de ${brl0(l[3])}) até 30/11/2026` : "tabela de novembro/2026"}</small>
+    <small>${modoQ==="prio" ? "25% entrada em 3x · 22% em 11 mensais · 18% anual · 7% na entrega · 28% em 36x" : "condição de pagamento: a sua, montada abaixo"}</small></div>`;
+}
+function propPadrao(){ const base = preco(loteQ()); PROP_LINHAS.forEach(r=>{ prio.prop.val[r.k] = Math.round(base*r.pct*100)/100; prio.prop.qt[r.k] = r.qt; }); prio.prop.desc = ""; }
+function renderProp(){
+  const base = preco(loteQ()), p = prio.prop;
+  if(!Object.keys(p.val).length) propPadrao();
+  $("#prop").innerHTML = `<table><thead><tr><th>Etapa</th><th>Valor (R$)</th><th>Vezes</th><th style="text-align:right">% do lote</th><th style="text-align:right">Parcela</th></tr></thead><tbody>${PROP_LINHAS.map(r=>`
+    <tr data-k="${r.k}"><td>${r.livre ? `<input type="text" class="desc" placeholder="Outro: permuta, veículo…" value="${esc(p.desc)}">` : `${r.nome}${r.sub ? `<span class="parc">${r.sub}</span>` : ``}`}<span class="pcm"></span></td>
+    <td><input type="text" inputmode="decimal" class="val" value="${fmtIn(p.val[r.k])}" placeholder="0,00" aria-label="Valor de ${r.nome}"></td>
+    <td><input type="text" inputmode="numeric" class="qt" value="${p.qt[r.k]||1}" aria-label="Quantidade de parcelas de ${r.nome}"></td>
+    <td class="n"><span class="pc">—</span></td><td class="n"><span class="parc"></span></td></tr>`).join("")}</tbody>
+    <tfoot><tr><td>Total proposto<span class="pcm" id="pr-pcm"></span></td><td class="n" id="pr-tot"></td><td></td><td class="n" id="pr-pc"></td><td></td></tr>
+    <tr><td>Saldo até o valor do lote<span class="pcm" id="pr-saldo-pcm"></span></td><td class="n" id="pr-saldo"></td><td></td><td class="n" id="pr-saldo-pc"></td><td></td></tr></tfoot></table>
+    <div class="resumo"><div><b id="pr-r1"></b><span>total proposto</span></div><div><b id="pr-r2"></b><span>do valor do lote (${brl0(base)})</span></div><div><b id="pr-r3"></b><span id="pr-r3s"></span></div></div>
+    <div class="acoes" style="margin-top:10px"><button type="button" class="b2 mini-btn" id="pr-padrao">Voltar à condição da tabela</button><button type="button" class="b2 mini-btn" id="pr-zero">Zerar valores</button></div>`;
+  $("#prop").addEventListener("input", e=>{
+    const tr = e.target.closest("tr[data-k]"); if(!tr) return;
+    const k = tr.dataset.k;
+    if(e.target.classList.contains("val")) prio.prop.val[k] = parseBR(e.target.value);
+    else if(e.target.classList.contains("qt")) prio.prop.qt[k] = Math.max(1, parseInt(e.target.value)||1);
+    else if(e.target.classList.contains("desc")) prio.prop.desc = e.target.value;
+    calcProp(); salvaPrio();
+  });
+  $("#prop").addEventListener("focusout", e=>{ if(e.target.classList.contains("val")) e.target.value = fmtIn(parseBR(e.target.value)); });
+  $("#pr-padrao").addEventListener("click", ()=>{ propPadrao(); renderProp(); salvaPrio(); });
+  $("#pr-zero").addEventListener("click", ()=>{ PROP_LINHAS.forEach(r=>{ prio.prop.val[r.k]=0; }); renderProp(); salvaPrio(); });
+  calcProp();
+}
+function totalProp(){ return PROP_LINHAS.reduce((s,r)=>s+(prio.prop.val[r.k]||0),0); }
+function parcelaTxt(r, v, q){ q = Math.max(1, parseInt(q)||1); return v ? (q>1 ? `${q}x ${brl2(r.juros ? priceParc(v,q) : v/q)}` : brl2(v)) : "—"; }
+function calcProp(){
+  const base = preco(loteQ()), p = prio.prop, tot = totalProp();
+  PROP_LINHAS.forEach(r=>{ const tr = $(`#prop tr[data-k="${r.k}"]`); const v = p.val[r.k]||0;
+    tr.querySelector(".pc").textContent = v ? pc1(v/base) : "—";
+    tr.querySelector("td:last-child .parc").textContent = v ? parcelaTxt(r, v, p.qt[r.k]) : "";
+    tr.querySelector(".pcm").innerHTML = v ? `${pc1(v/base)} do lote <small>· ${parcelaTxt(r, v, p.qt[r.k])}</small>` : "";
+  });
+  const saldo = base - tot, pcT = tot/base;
+  $("#pr-tot").textContent = brl2(tot); $("#pr-pc").textContent = pc1(pcT);
+  $("#pr-saldo").textContent = (saldo<0 ? "+ " : "") + brl2(Math.abs(saldo)); $("#pr-saldo-pc").textContent = pc1(Math.abs(1-pcT));
+  $("#pr-pcm").textContent = pc1(pcT) + " do lote"; $("#pr-saldo-pcm").textContent = pc1(Math.abs(1-pcT)) + (saldo<0 ? " a mais" : "");
+  $("#pr-r1").textContent = brl0(tot); $("#pr-r2").textContent = pc1(pcT);
+  const r3 = $("#pr-r3"), r3s = $("#pr-r3s"); r3.className = "";
+  if(Math.abs(saldo) < 1){ r3.textContent = "Igual"; r3.classList.add("ok"); r3s.textContent = "ao valor do lote"; }
+  else if(saldo > 0){ r3.textContent = "− " + brl0(saldo); r3.classList.add("abaixo"); r3s.textContent = `abaixo do valor do lote (${pc1(saldo/base)})`; }
+  else { r3.textContent = "+ " + brl0(-saldo); r3.classList.add("acima"); r3s.textContent = `acima do valor do lote (${pc1(-saldo/base)})`; }
+}
+function abreQuadro(modo){
+  const novo = modoQ !== modo;
+  modoQ = modo;
+  const l = loteQ();
+  $("#q-titulo").textContent = modo==="prio" ? `Solicitação de prioridade · lote ${id(l)}` : `Proposta de compra · lote ${id(l)}`;
+  $("#q-lead").textContent = modo==="prio"
+    ? "Preencha os dados do comprador e gere o Termo de Solicitação de Prioridade com a condição de pagamento da tabela. A efetivação depende da análise da Barraleve."
+    : "Monte a sua condição de pagamento, preencha os dados do comprador e gere a proposta. Ela vai para análise da Barraleve.";
+  $("#quadro").hidden = false; $("#q-prop").hidden = modo!=="prop"; $("#q-assina").hidden = true; $("#q-erro").hidden = true;
+  renderCab();
+  if(modo==="prop") renderProp();
+  if(novo && !$("#c1")){
+    // aproveita o que a pessoa já digitou no cadastro da simulação
+    if(lead.tipo==="Cliente"){ prio.c[0].nome ||= lead.nome; prio.c[0].zap ||= lead.zap; }
+    if(lead.tipo==="Corretor(a)"){ prio.k.nome ||= lead.nome; prio.k.zap ||= lead.zap; }
+    renderCompradores();
+    $("#k-nome").value = prio.k.nome; $("#k-imob").value = prio.k.imob; $("#k-zap").value = prio.k.zap; $("#k-mail").value = prio.k.mail;
+  }
+  ping("quadro-"+modo, loteAtual);
+  libsPdf().catch(()=>{}); // já carrega as bibliotecas do PDF enquanto a pessoa preenche
+  $("#quadro").scrollIntoView({behavior:"smooth"});
+}
+function atualizaQuadro(){ renderCab(); if(modoQ==="prop") calcProp(); $("#q-titulo").textContent = (modoQ==="prio" ? "Solicitação de prioridade · lote " : "Proposta de compra · lote ") + loteAtual; }
+$("#q-form").addEventListener("input", e=>{
+  const t = e.target, box = t.closest(".comprador");
+  if(box){ const n = +box.id.slice(1), c = prio.c[n-1];
+    if(t.name===`c${n}-tipo`){ c.tipo = t.value; mostraTipo(n); renderDocs(); }
+    else if(t.dataset.k){ c[t.dataset.k] = t.value; if(t.dataset.k==="civil") renderDocs(); }
+  } else if(t.id && t.id.startsWith("k-")) prio.k[t.id.slice(2)] = t.value;
+  else if(t.id==="q-ok") prio.ok = t.checked;
+  salvaPrio();
+});
+$("#q-form").addEventListener("click", e=>{
+  if(e.target.id==="add-c2"){ prio.c[1] = {tipo:"PF",nac:"brasileira"}; renderCompradores(); salvaPrio(); }
+  if(e.target.id==="rm-c2"){ prio.c[1] = null; renderCompradores(); salvaPrio(); }
+  if(e.target.id==="q-fechar"){ $("#quadro").hidden = true; modoQ = null; document.getElementById("simulador").scrollIntoView({behavior:"smooth"}); }
+});
+function validaPrio(){
+  for(const [i,c] of prio.c.entries()){ if(!c) continue; const n = i+1;
+    if(c.tipo==="PJ"){ if(!c.razao||!c.cnpj||!c.pjend||!c.repnome||!c.repcpf) return `Comprador ${n}: preencha razão social, CNPJ, endereço da sede, representante legal e CPF dele.`; if(!c.pjmail && !c.pjzap) return `Comprador ${n}: informe e-mail ou WhatsApp da empresa.`; }
+    else { if(!c.nome||!c.cpf) return `Comprador ${n}: preencha nome completo e CPF.`; if(!c.civil||!c.prof) return `Comprador ${n}: informe profissão e estado civil.`; if(!c.end||!c.cid) return `Comprador ${n}: informe o endereço e a cidade.`; if(!c.mail||!c.zap) return `Comprador ${n}: informe e-mail e WhatsApp.`; if(!ZAP_RE.test(c.zap)) return `Comprador ${n}: WhatsApp inválido. Ex.: (48) 99999-9999`; }
+  }
+  if(modoQ==="prop" && totalProp() <= 0) return "Preencha pelo menos um valor na sua proposta de pagamento.";
+  if(!$("#q-ok").checked) return "Marque a declaração de ciência e autorização para gerar o termo.";
+  return "";
+}
+$("#q-form").addEventListener("submit", e=>{
+  e.preventDefault();
+  const erro = $("#q-erro"), msg = validaPrio();
+  if(msg){ erro.textContent = msg; erro.hidden = false; erro.scrollIntoView({behavior:"smooth",block:"center"}); return; }
+  erro.hidden = true;
+  montaTermo(loteQ(), modoQ); ping("termo-"+modoQ, loteAtual);
+  gerarPdf(modoQ, "#q-status", "#q-pronto").then(ok=>{ if(ok){ $("#q-assina").hidden = false; } });
+});
+
+// ---- PDF de verdade, gerado no navegador (funciona no celular e em navegador dentro de app, onde "Imprimir" não abre) ----
+let pdfBlob = null, pdfNome = "";
+function carrega(src){ return new Promise((ok, err)=>{ if(document.querySelector(`script[src="${src}"]`)?.dataset.ok) return ok(); const s = document.createElement("script"); s.src = src; s.onload = ()=>{ s.dataset.ok = "1"; ok(); }; s.onerror = ()=>err(new Error("não carregou " + src.split("/").pop())); document.head.appendChild(s); }); }
+async function libsPdf(){ if(window.html2canvas && window.jspdf) return; await Promise.all([carrega("https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"), carrega("https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js")]); }
+async function gerarPdf(tipo, selStatus, selPronto){
+  const st = $(selStatus), pr = $(selPronto), pdfEl = document.getElementById("pdf");
+  const diga = m => { st.hidden = false; st.innerHTML = m; };
+  pr.hidden = true; pdfBlob = null;
+  diga("⏳ Gerando o PDF… leva alguns segundos.");
+  try{
+    await libsPdf();
+    pdfEl.classList.add("ver");
+    await new Promise(r=>setTimeout(r, 80));
+    const PH = 1123, MARG = 60; // A4 em px (96 dpi) e margem de 16 mm
+    const pg2 = pdfEl.querySelector(".pdf-pg2"), pg2Top = pg2 ? pg2.offsetTop : null;
+    const canvas = await html2canvas(pdfEl, { scale: 2, backgroundColor: "#ffffff", logging: false, windowWidth: 794, scrollX: 0, scrollY: 0 });
+    pdfEl.classList.remove("ver");
+    const total = canvas.height / 2, { jsPDF } = window.jspdf, pdf = new jsPDF({ unit: "mm", format: "a4" });
+    const starts = pg2Top != null ? [0, pg2Top] : [0];
+    let primeira = true;
+    for(let i = 0; i < starts.length; i++){
+      let y = starts[i]; const fim = starts[i+1] ?? total;
+      while(y < fim){
+        const topo = y === 0 ? 0 : MARG, h = Math.min(PH - topo, fim - y);
+        const c = document.createElement("canvas"); c.width = canvas.width; c.height = Math.round(h * 2);
+        const g = c.getContext("2d"); g.fillStyle = "#fff"; g.fillRect(0, 0, c.width, c.height);
+        g.drawImage(canvas, 0, Math.round(y * 2), canvas.width, Math.round(h * 2), 0, 0, canvas.width, Math.round(h * 2));
+        if(!primeira) pdf.addPage(); primeira = false;
+        pdf.addImage(c.toDataURL("image/jpeg", 0.92), "JPEG", 0, topo / PH * 297, 210, h / PH * 297);
+        y += h;
+      }
+    }
+    pdfBlob = pdf.output("blob");
+    pdfNome = `Clareia-${tipo === "sim" ? "simulacao" : tipo === "prio" ? "solicitacao-prioridade" : "proposta"}-${loteAtual}.pdf`;
+    const nPag = pdf.getNumberOfPages();
+    diga(`✅ PDF pronto (${nPag} página${nPag > 1 ? "s" : ""}). Toque em <b>Enviar ou salvar</b>: no celular abre o compartilhar (WhatsApp, Arquivos…); no computador baixa o arquivo.`);
+    pr.innerHTML = `<div class="acoes"><button type="button" class="b1 enviar">📤 Enviar ou salvar o PDF</button><button type="button" class="b2 imprimir">🖨️ Imprimir</button></div><p class="dica">Não abriu nada? Se você está vendo esta página dentro de um aplicativo (WhatsApp, Instagram…), toque nos três pontos e escolha <b>Abrir no navegador</b> (Safari ou Chrome) e gere de novo.</p>`;
+    pr.hidden = false;
+    pr.querySelector(".enviar").addEventListener("click", enviarPdf);
+    pr.querySelector(".imprimir").addEventListener("click", ()=>{ try{ window.print(); }catch(e){} });
+    pr.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    return true;
+  }catch(e){
+    pdfEl.classList.remove("ver");
+    console.warn("pdf:", e);
+    diga(`⚠️ Não consegui gerar o arquivo PDF (${esc(e.message || e)}). Tente de novo ou use <b>Imprimir</b> e escolha "Salvar como PDF".`);
+    pr.innerHTML = `<div class="acoes"><button type="button" class="b2 imprimir">🖨️ Imprimir</button></div>`; pr.hidden = false;
+    pr.querySelector(".imprimir").addEventListener("click", ()=>{ try{ window.print(); }catch(e){} });
+    return false;
+  }
+}
+async function enviarPdf(){
+  if(!pdfBlob) return;
+  const file = new File([pdfBlob], pdfNome, { type: "application/pdf" });
+  if(navigator.canShare && navigator.canShare({ files: [file] })){
+    try{ await navigator.share({ files: [file], title: pdfNome }); return; }catch(e){ if(e.name === "AbortError") return; }
+  }
+  const url = URL.createObjectURL(pdfBlob);
+  const a = document.createElement("a"); a.href = url; a.download = pdfNome; a.rel = "noopener"; document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(()=>{ try{ window.open(url, "_blank"); }catch(e){} }, 400); // iPhone sem "download": abre o PDF numa aba, de onde dá para compartilhar
+  setTimeout(()=>URL.revokeObjectURL(url), 120000);
+}
+function dlComprador(c, n){
+  const keys = c.tipo==="PJ" ? PJ_KEYS : PF_KEYS, full = ["nome","razao","end","pjend"];
+  return `<div class="pdf-h2">Comprador ${n} · ${c.tipo==="PJ" ? "pessoa jurídica" : "pessoa física"}</div><div class="pdf-dl">${Object.entries(keys).map(([k,lab])=>`<div class="${full.includes(k)?"full":""}"><small>${lab}</small>${esc(k==="nasc" ? fmtData(c[k]) : c[k]) || "&nbsp;"}</div>`).join("")}</div>`;
+}
+function montaTermo(l, modo){
+  const v = preco(l), promo = !!l[4], p = plano(v), hoje = new Date();
+  const ref = `${id(l)}-${hoje.toISOString().slice(0,10).replace(/-/g,"")}-${String(hoje.getHours()).padStart(2,"0")}${String(hoje.getMinutes()).padStart(2,"0")}`;
+  const titulo = modo==="prio" ? "Termo de Solicitação de Prioridade" : "Proposta de Compra";
+  document.getElementById("pdf-logo").src = document.querySelector(".logo").src;
+  document.getElementById("pdf-sub").textContent = `${titulo} · ref. ${ref}`;
+  document.getElementById("pdf-leg").textContent = LEG_TERMO;
+  document.getElementById("pdf").classList.add("pdf-termo");
+  const linhasTab = [["Entrada","25%",p.entrada.tot,`3x ${brl2(p.entrada.parc)}`],["Mensais pré-chaves","22%",p.mensais.tot,`11x ${brl2(p.mensais.parc)}`],["Anual","18%",p.anual.tot,`1x ${brl2(p.anual.tot)}`],["Na entrega","7%",p.entrega.tot,`1x ${brl2(p.entrega.tot)}`],["Financiamento direto (juros 1% a.m.)","28%",p.fin.tot,`36x ${brl2(p.fin.parc)}`]];
+  const tot = totalProp();
+  const linhasProp = PROP_LINHAS.filter(r=>prio.prop.val[r.k]>0).map(r=>[r.livre ? (prio.prop.desc||"Outro") : (r.pdf||r.nome), pc1((prio.prop.val[r.k])/v), prio.prop.val[r.k], parcelaTxt(r, prio.prop.val[r.k], prio.prop.qt[r.k])]);
+  const linhas = modo==="prio" ? linhasTab : linhasProp;
+  const dif = v - tot;
+  const difTxt = Math.abs(dif) < 1 ? "igual ao valor do lote" : dif > 0 ? `<b style="color:#B8321F">${brl0(dif)} (${pc1(dif/v)}) abaixo do valor do lote</b>` : `${brl0(-dif)} (${pc1(-dif/v)}) acima do valor do lote`;
+  const compradores = prio.c.filter(Boolean);
+  const decl = modo==="prio"
+    ? `<li>Solicito prioridade na reserva do lote ${id(l)} (quadra ${l[0]}) do Condomínio Clareia Barrinha, em Garopaba/SC, nas condições descritas neste termo.</li>
+       <li>Estou ciente de que esta solicitação não constitui reserva nem garante a disponibilidade do lote, e de que a efetivação está sujeita à análise e aprovação da Barraleve.</li>`
+    : `<li>Apresento proposta de compra do lote ${id(l)} (quadra ${l[0]}) do Condomínio Clareia Barrinha, em Garopaba/SC, nas condições de pagamento descritas neste documento.</li>
+       <li>Estou ciente de que esta proposta não constitui reserva, e de que a aceitação está sujeita à análise e aprovação da Barraleve, que pode recusá-la ou apresentar contraproposta.</li>`;
+  document.getElementById("pdf-corpo").innerHTML = `
+    <h1>${titulo} <small>Lote ${id(l)} · Quadra ${l[0]} · ${m2(l[2])} · ${brl0(v/l[2])}/m² · emitido em ${hoje.toLocaleDateString("pt-BR")}</small></h1>
+    ${CONF[id(l)] ? `<p class="pdf-med"><b>Medidas e confrontações</b> <b style="color:#E0862A">· área total ${m2(l[2])}:</b> ${medidas(id(l)).join(" · ").replace(/<\/?span>/g,"")}. <small>${AVISO_MED}</small></p>` : ``}
+    <div class="pdf-box">Valor do lote: <b>${brl0(v)}</b> ${promo ? `(condição especial válida até 30/11/2026 · valor de tabela ${brl0(l[3])})` : `(tabela de novembro/2026)`}</div>
+    <div class="pdf-h2">${modo==="prio" ? "Condição de pagamento (tabela)" : "Condição de pagamento proposta"}</div>
+    <table class="pdf-tab"><tr><th>Etapa</th><th>% do lote</th><th>Total</th><th>Parcelas</th></tr>
+      ${linhas.map(r=>`<tr><td>${esc(r[0])}</td><td class="pc">${r[1]}</td><td>${brl2(r[2])}</td><td>${r[3]}</td></tr>`).join("")}
+      ${modo==="prop" ? `<tr><td><b>Total proposto</b></td><td class="pc">${pc1(tot/v)}</td><td><b>${brl2(tot)}</b></td><td>${difTxt}</td></tr>` : ``}
+    </table>
+    <div class="pdf-mapa">
+      <img src="${document.querySelector("#mapa-in img").src}" alt="Mapa do condomínio com o lote ${id(l)} em destaque">
+      ${pontosMapa("pdf-dot", id(l))}
+      ${LOTE_POS[id(l)] ? `<div class="pdf-pin" style="left:${LOTE_POS[id(l)][0]}%;top:${LOTE_POS[id(l)][1]}%">${id(l)}</div>` : ``}
+      <div class="pdf-mapa-leg">Lote ${id(l)} em laranja · verde = disponível · vermelho = vendido</div>
+    </div>
+    <p class="pdf-meta">Terrenos a 300 m da praia na Barrinha, Garopaba/SC. Entrega prevista: novembro/2027. Página 1 de 2 · ref. ${ref}</p>
+    <div class="pdf-pg2">
+      ${compradores.map((c,i)=>dlComprador(c, i+1)).join("")}
+      <div class="pdf-h2">Corretor(a) responsável</div>
+      <div class="pdf-dl c4"><div><small>Nome</small>${esc(prio.k.nome)||"&nbsp;"}</div><div><small>Imobiliária</small>${esc(prio.k.imob)||"&nbsp;"}</div><div><small>WhatsApp</small>${esc(prio.k.zap)||"&nbsp;"}</div><div><small>E-mail</small>${esc(prio.k.mail)||"&nbsp;"}</div></div>
+      <div class="pdf-h2">Documentos a enviar</div>
+      <ul class="pdf-docs">${compradores.map((c,i)=>`<li><b>Comprador ${i+1}:</b> ${docsDe(c).join(" · ")}</li>`).join("")}</ul>
+      <div class="pdf-h2">Declarações</div>
+      <div class="pdf-decl"><ol>${decl}
+        <li>Os valores seguem a tabela de novembro/2026, reajustada mensalmente pelo INCC${promo ? ", e a condição especial informada vale até 30/11/2026" : ""}.</li>
+        <li>Comprometo-me a enviar os documentos relacionados acima para a análise cadastral.</li>
+        <li>Autorizo o uso dos dados informados para a análise cadastral e, aprovada a reserva, para a elaboração do contrato, nos termos da Lei 13.709/2018 (LGPD).</li></ol></div>
+      <p class="pdf-decl">Local e data: ______________________________________, ${hoje.toLocaleDateString("pt-BR")}</p>
+      <div class="pdf-ass">
+        ${compradores.map((c,i)=>`<div><b>${esc(c.tipo==="PJ" ? (c.repnome||c.razao) : c.nome)||"Comprador "+(i+1)}</b>Comprador ${i+1}${c.tipo==="PJ" ? ` · ${esc(c.razao)}` : ``}</div>`).join("")}
+        <div><b>${esc(prio.k.nome)||"Corretor(a)"}</b>Corretor(a) responsável</div>
+        <div><b>Clareia · Gerência de Vendas</b>Recebido em ____/____/______</div>
+      </div>
+      <p class="pdf-meta" style="margin-top:10px">Página 2 de 2 · ref. ${ref}</p>
+    </div>`;
+}
+
 // Atalho: abrir a página com ?pdf=A2 já monta a folha do lote (útil para gerar o PDF direto)
 { const q = new URLSearchParams(location.search).get("pdf"); const lq = q && LOTES.find(x=>id(x)===q.toUpperCase()); if(lq){ montaPdf(lq); document.getElementById("pdf").classList.add("ver"); } }
 
