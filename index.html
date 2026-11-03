@@ -281,7 +281,7 @@ footer{font-size:11px;color:var(--suave);padding-block:20px 34px;border-top:1px 
 
   <section style="padding-top:0"><div class="cta"><h2>Gostou de algum lote?</h2><p>O condomínio está lindo! Escolha o lote acima, preencha seu nome e WhatsApp no quadro laranja e veja as parcelas. A condição especial dos lotes A2, A4, C24 e C25 vale até 30/11/2026.</p><button class="b2" type="button" id="ir-topo">Voltar ao simulador</button></div></section>
   <footer>
-    Valores da tabela de outubro/2026. A tabela é reajustada mensalmente pelo INCC. Condição de pagamento: 25% de entrada em 3x · 22% em 12 mensais pré-chaves · 18% em 1 anual · 7% na entrega · 28% em 36x pelo financiamento direto com juros de 1% a.m. (Tabela Price). Valores das parcelas arredondados ao centavo. Reserva mediante solicitação de prioridade, sujeita à análise da loteadora. Imagens meramente ilustrativas. Projeto de arquitetura: Arte Arquitetura (CAU A11835-4). Paisagismo: Krebs+ Arquitetura Paisagística (CAU A7292-3).
+    Valores da tabela de novembro/2026. A tabela é reajustada mensalmente pelo INCC. Condição de pagamento: 25% de entrada em 3x · 22% em 11 mensais pré-chaves · 18% em 1 anual · 7% na entrega · 28% em 36x pelo financiamento direto com juros de 1% a.m. (Tabela Price). Valores das parcelas arredondados ao centavo. Reserva mediante solicitação de prioridade, sujeita à análise da loteadora. Imagens meramente ilustrativas. Projeto de arquitetura: Arte Arquitetura (CAU A11835-4). Paisagismo: Krebs+ Arquitetura Paisagística (CAU A7292-3).
   </footer>
 </main>
 
@@ -289,20 +289,20 @@ footer{font-size:11px;color:var(--suave);padding-block:20px 34px;border-top:1px 
 <div id="pdf" aria-hidden="true">
   <div class="pdf-top">
     <img id="pdf-logo" alt="Clareia">
-    <div class="pdf-titulo">Clareia Barrinha · Garopaba/SC<br><span>Simulação de pagamento · tabela de outubro/2026</span></div>
+    <div class="pdf-titulo">Clareia Barrinha · Garopaba/SC<br><span>Simulação de pagamento · tabela de novembro/2026</span></div>
   </div>
   <div id="pdf-corpo"></div>
-  <p class="pdf-leg">Condição de pagamento: 25% de entrada em 3x · 22% em 12 mensais pré-chaves · 18% em 1 anual · 7% na entrega · 28% em 36x pelo financiamento direto com juros de 1% a.m. (Tabela Price). A tabela é reajustada mensalmente pelo INCC. Valores arredondados ao centavo. Imagens meramente ilustrativas. Projeto de arquitetura: Arte Arquitetura (CAU A11835-4). Paisagismo: Krebs+ Arquitetura Paisagística (CAU A7292-3).</p>
+  <p class="pdf-leg">Condição de pagamento: 25% de entrada em 3x · 22% em 11 mensais pré-chaves · 18% em 1 anual · 7% na entrega · 28% em 36x pelo financiamento direto com juros de 1% a.m. (Tabela Price). A tabela é reajustada mensalmente pelo INCC. Valores arredondados ao centavo. Imagens meramente ilustrativas. Projeto de arquitetura: Arte Arquitetura (CAU A11835-4). Paisagismo: Krebs+ Arquitetura Paisagística (CAU A7292-3).</p>
 </div>
 
 <script>
 const LOTES = [
-  // [quadra, lote, área m², valor tabela out/26, valor promocional|null]
-  ["A",2,450.77,1798000,1430000],["A",4,454.96,1809000,1500000],["A",10,469.30,1861000,null],["A",12,456.66,1923000,null],["A",16,528.28,2224000,null],
-  ["C",24,450.38,1903000,1490000],["C",25,455.34,1913000,1530000],["C",26,540.00,2584000,null],["C",27,526.45,2512000,null],
-  ["D",35,566.49,2832000,null],["E",48,642.54,2190000,null],["E",49,508.37,2429000,null],
-  ["F",51,454.55,1913000,null],["F",60,482.40,2026000,null],["F",61,538.50,2265000,null],["F",63,501.06,2109000,null],
-  ["G",69,578.92,2429000,null],["G",70,548.88,2305000,null]
+  // [quadra, lote, área m², valor tabela nov/26, valor promocional|null]
+  ["A",2,450.77,1804000,1430000],["A",4,454.96,1815000,1500000],["A",10,469.30,1868000,null],["A",12,456.66,1930000,null],["A",16,528.28,2232000,null],
+  ["C",24,450.38,1910000,1490000],["C",25,455.34,1920000,1530000],["C",26,540.00,2593000,null],["C",27,526.45,2521000,null],
+  ["D",35,566.49,2842000,null],["E",48,642.54,2198000,null],["E",49,508.37,2438000,null],
+  ["F",51,454.55,1920000,null],["F",60,482.40,2033000,null],["F",61,538.50,2273000,null],["F",63,501.06,2116000,null],
+  ["G",69,578.92,2438000,null],["G",70,548.88,2313000,null]
 ];
 // medidas e confrontações de cada lote disponível: [lado, medida, confronta com]
 // fonte: planta de implantação (clareia_planta_84x59,4cm.pdf, material preliminar), lida em 20/10/2026
@@ -337,13 +337,13 @@ const id = l => l[0]+l[1];
 const preco = l => l[4] ?? l[3];
 function plano(v){
   const i=0.01, n=36, fin=v*0.28;
-  return { entrada:{tot:v*0.25, parc:v*0.25/3}, mensais:{tot:v*0.22, parc:v*0.22/12}, anual:{tot:v*0.18}, entrega:{tot:v*0.07}, fin:{tot:fin, parc:fin*i/(1-Math.pow(1+i,-n))} };
+  return { entrada:{tot:v*0.25, parc:v*0.25/3}, mensais:{tot:v*0.22, parc:v*0.22/11}, anual:{tot:v*0.18}, entrega:{tot:v*0.07}, fin:{tot:fin, parc:fin*i/(1-Math.pow(1+i,-n))} };
 }
 function linhas(v){
   const p=plano(v);
   return `<table class="parcelas"><tbody>
     <tr><td>Entrada · 25%<small>${brl2(p.entrada.tot)} em 3 vezes</small></td><td class="v">3x ${brl2(p.entrada.parc)}</td></tr>
-    <tr><td>Mensais pré-chaves · 22%<small>${brl2(p.mensais.tot)} em 12 vezes</small></td><td class="v">12x ${brl2(p.mensais.parc)}</td></tr>
+    <tr><td>Mensais pré-chaves · 22%<small>${brl2(p.mensais.tot)} em 11 vezes</small></td><td class="v">11x ${brl2(p.mensais.parc)}</td></tr>
     <tr><td>Anual · 18%<small>1 parcela</small></td><td class="v">1x ${brl2(p.anual.tot)}</td></tr>
     <tr><td>Na entrega · 7%<small>1 parcela</small></td><td class="v">1x ${brl2(p.entrega.tot)}</td></tr>
     <tr><td>Financiamento direto · 28%<small>${brl2(p.fin.tot)} em 36x, juros de 1% a.m.</small></td><td class="v">36x ${brl2(p.fin.parc)}</td></tr>
@@ -352,17 +352,17 @@ function linhas(v){
 const promos = LOTES.filter(l=>l[4]), tabela = LOTES.filter(l=>!l[4]);
 const opcoes =
   `<optgroup label="🔥 Condição especial até 30/11">${promos.map(l=>`<option value="${id(l)}">🔥 ${id(l)} · ${m2(l[2])} · ${brl0(l[4])}</option>`).join("")}</optgroup>` +
-  `<optgroup label="Tabela outubro/2026">${tabela.map(l=>`<option value="${id(l)}">${id(l)} · ${m2(l[2])} · ${brl0(l[3])}</option>`).join("")}</optgroup>`;
+  `<optgroup label="Tabela novembro/2026">${tabela.map(l=>`<option value="${id(l)}">${id(l)} · ${m2(l[2])} · ${brl0(l[3])}</option>`).join("")}</optgroup>`;
 
 function textoCopia(l){
   const v=preco(l), p=plano(v);
   return `Clareia Barrinha · Garopaba/SC
 Lote ${id(l)} (quadra ${l[0]}) · ${m2(l[2])}
-${l[4] ? `Condição especial até 30/11: de ${brl0(l[3])} por ${brl0(v)}` : `Valor: ${brl0(v)} (tabela out/2026)`}
+${l[4] ? `Condição especial até 30/11: de ${brl0(l[3])} por ${brl0(v)}` : `Valor: ${brl0(v)} (tabela nov/2026)`}
 
 Pagamento:
 • Entrada 25%: 3x ${brl2(p.entrada.parc)}
-• Mensais 22%: 12x ${brl2(p.mensais.parc)}
+• Mensais 22%: 11x ${brl2(p.mensais.parc)}
 • Anual 18%: ${brl2(p.anual.tot)}
 • Entrega 7%: ${brl2(p.entrega.tot)}
 • Financiamento direto 28%: 36x ${brl2(p.fin.parc)} (juros 1% a.m.)
@@ -377,7 +377,7 @@ function mostra(cod){
   const card = document.getElementById("destaque");
   card.innerHTML = `
     <div class="cab">
-      <div>${promo ? `<span class="eyebrow" style="color:var(--onda)">🔥 Condição especial</span>` : `<span class="chip2">Tabela outubro/2026</span>`}
+      <div>${promo ? `<span class="eyebrow" style="color:var(--onda)">🔥 Condição especial</span>` : `<span class="chip2">Tabela novembro/2026</span>`}
         <div class="lote">${id(l)}</div><div class="area">Quadra ${l[0]} · ${m2(l[2])} · ${brl0(v/l[2])}/m²</div></div>
       <div class="precos">${promo ? `<div class="de">de ${brl0(l[3])}</div><div class="por">por ${brl0(v)}</div><span class="off">− ${brl0(l[3]-v)} (${(Math.round((l[3]-v)/l[3]*1000)/10).toLocaleString("pt-BR")}%)</span>` : `<div class="por">${brl0(v)}</div>`}</div>
     </div>
@@ -408,7 +408,7 @@ function mostra(cod){
       <div class="fundo" id="simulacao">
         <p class="liberado" id="liberado" hidden>✅ Simulação liberada.</p>
         ${linhas(v)}
-        ${promo ? `<p class="rod">Condição válida até 30/11/2026.</p>` : `<p class="rod">Valor da tabela de outubro/2026.</p>`}
+        ${promo ? `<p class="rod">Condição válida até 30/11/2026.</p>` : `<p class="rod">Valor da tabela de novembro/2026.</p>`}
         <div class="escolha" style="padding-top:0">
           <div class="acoes"><button class="b1" id="pdf-btn" type="button">📄 Gerar PDF da simulação</button></div>
           <p class="dica">Na janela que abrir, escolha <b>Salvar como PDF</b> (no celular, use o botão de compartilhar) e envie pra quem quiser.</p>
@@ -560,11 +560,11 @@ function montaPdf(l){
   document.getElementById("pdf-corpo").innerHTML = `
     <h1>Lote ${id(l)} <small>Quadra ${l[0]} · ${m2(l[2])} · ${brl0(v/l[2])}/m²</small></h1>
     ${CONF[id(l)] ? `<p class="pdf-med"><b>Medidas e confrontações</b> <b style="color:#E0862A">· área total ${m2(l[2])}:</b> ${medidas(id(l)).join(" · ").replace(/<\/?span>/g,"")}. <small>${AVISO_MED}</small></p>` : ``}
-    <p class="pdf-preco">${promo ? `<s>de ${brl0(l[3])}</s> <b>por ${brl0(v)}</b> <span>condição especial válida até 30/11/2026</span>` : `<b>${brl0(v)}</b> <span>tabela de outubro/2026</span>`}</p>
+    <p class="pdf-preco">${promo ? `<s>de ${brl0(l[3])}</s> <b>por ${brl0(v)}</b> <span>condição especial válida até 30/11/2026</span>` : `<b>${brl0(v)}</b> <span>tabela de novembro/2026</span>`}</p>
     <table class="pdf-tab">
       <tr><th>Etapa</th><th>Total</th><th>Parcelas</th></tr>
       <tr><td>Entrada · 25%</td><td>${brl2(p.entrada.tot)}</td><td>3x ${brl2(p.entrada.parc)}</td></tr>
-      <tr><td>Mensais pré-chaves · 22%</td><td>${brl2(p.mensais.tot)}</td><td>12x ${brl2(p.mensais.parc)}</td></tr>
+      <tr><td>Mensais pré-chaves · 22%</td><td>${brl2(p.mensais.tot)}</td><td>11x ${brl2(p.mensais.parc)}</td></tr>
       <tr><td>Anual · 18%</td><td>${brl2(p.anual.tot)}</td><td>1x ${brl2(p.anual.tot)}</td></tr>
       <tr><td>Na entrega · 7%</td><td>${brl2(p.entrega.tot)}</td><td>1x ${brl2(p.entrega.tot)}</td></tr>
       <tr><td>Financiamento direto · 28%</td><td>${brl2(p.fin.tot)}</td><td>36x ${brl2(p.fin.parc)} <small>(juros 1% a.m.)</small></td></tr>
