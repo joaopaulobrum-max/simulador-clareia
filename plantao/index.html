@@ -203,6 +203,8 @@ textarea { width: 100%; max-width: 100%; margin-top: 10px; min-height: 180px; fo
   var API = 'https://script.google.com/macros/s/AKfycbxo5IecVyM33m4xi9BVN6GxUOz5k_HBLpnus2c18lLIu8V9q1Tg4h_FT5fj7wlwTJoV7g/exec', ORIGEM = 'geral';
   var caixa = document.getElementById('cad');
   if (!API || !caixa) return;   // versão sem planilha: o cadastro não aparece
+  // Aparece já ao abrir, com as listas em "Carregando…": o programa leva alguns segundos para responder e, escondido, parecia que o cadastro não existia.
+  caixa.hidden = false;
   var $ = function (id) { return document.getElementById(id); };
   var form = $('cad-form'), nome = $('cad-nome'), cel = $('cad-celular'), mail = $('cad-email');
   var sImo = $('cad-imo'), sCor = $('cad-corretor'), botao = $('cad-botao'), msg = $('cad-msg');
